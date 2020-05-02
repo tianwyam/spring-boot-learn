@@ -32,5 +32,6 @@
 
 	<modules>
 		<module>spring-boot-learn-word</module>
+		<module>spring-boot-learn-excel</module>
 	</modules>
 </project>

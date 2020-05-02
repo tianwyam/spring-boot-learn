@@ -1,0 +1,16 @@
+
+server:  port: 8080
+  servlet:    context-path: /
+    
+    
+spring:  datasource:    url: jdbc:h2:./db/h2.db
+    driver-class-name: org.h2.Driver
+    username: root
+    password: 123456
+    
+    
+  jpa:    hibernate:      ddl-auto: update
+    show-sql: true
+  
+  h2:    console:      enabled: true
+    
