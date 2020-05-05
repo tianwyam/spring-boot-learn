@@ -25,9 +25,12 @@
 
 
 
+- #### spring-boot-learn-crawler-webmagic
 
+  简单学习WebMagic，是一个简单灵活的Java爬虫框架
 
-
+  - 使用webmagic爬取了笔趣阁小说类别
+  - 爬取了笔趣阁小说《剑来》目录
 
 
 
