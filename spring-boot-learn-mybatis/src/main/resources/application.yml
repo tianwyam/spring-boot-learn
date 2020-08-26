@@ -1,0 +1,17 @@
+
+server:  port: 8080
+  servlet:    context-path: /my
+    
+logging:  level:    root: info
+    
+spring:  datasource:    username: root
+    password: mysql
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    
+    
+mybatis:  config-location: classpath:mybatis/mybatis.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.tianya.springboot.mybatis.entity
+  
+  
