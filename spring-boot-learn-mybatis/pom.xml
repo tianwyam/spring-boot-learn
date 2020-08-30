@@ -35,13 +35,14 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-
+		<!-- Spring Boot 整合的 mybatis 的依赖jar包，其中包含mybatis相关的依赖 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.0.0</version>
 		</dependency>
 
+		<!-- MySql驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
