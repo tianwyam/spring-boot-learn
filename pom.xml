@@ -36,5 +36,6 @@
 		<module>spring-boot-learn-crawler-webmagic</module>
 		<module>spring-boot-learn-common</module>
 		<module>spring-boot-learn-mybatis</module>
+		<module>spring-boot-learn-capture-screen</module>
 	</modules>
 </project>

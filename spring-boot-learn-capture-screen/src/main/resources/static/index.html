@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>屏幕共享</title>
+	
+	<script type="text/javascript">
+		var source = new EventSource("/sse/index");
+		source.onmessage = function(event){
+			console.log('onmessage');
+			console.log(event.data);
+			document.getElementById('captureImgId').src = event.data;
+		};
+	</script>
+
+</head>
+<body>
+	<div style="width: 600px;height: 400px;text-align: center">
+		<div>屏幕共享</div>
+		<div>
+			<img alt="截屏" src="" id="captureImgId">
+		</div>
+	
+	</div>
+
+</body>
+</html>
