@@ -22,9 +22,6 @@ public class CaptureScreenUtils {
 	 */
 	public static String capture() {
 		
-		
-		System.setProperty("java.awt.headless", "false");
-		
 		// 获取屏幕大小
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		String fileName = null ;

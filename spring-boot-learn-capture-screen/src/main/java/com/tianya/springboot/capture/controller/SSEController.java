@@ -2,6 +2,8 @@ package com.tianya.springboot.capture.controller;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,8 @@ import com.tianya.springboot.capture.utils.CaptureScreenUtils;
 @RequestMapping("/sse")
 public class SSEController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SSEController.class);
+	
 	// 服务端推送 返回结果必须以 data: 开始
 	public static final String SSE_RETURN_START = "data:" ;
 	
@@ -33,13 +37,15 @@ public class SSEController {
 	
 	@GetMapping("/index")
 	public SseEmitter sse() {
-		
+		// 获取屏幕截图，每个1秒获取一次，返回前端界面进行图片展示
 		String capture = CaptureScreenUtils.capture();
-		SseEmitter emitter = new SseEmitter(100L) ;
+		SseEmitter emitter = new SseEmitter(1L) ;
 		try {
-			emitter.send(capture);
+			emitter.send(SseEmitter.event()
+					.reconnectTime(1)
+					.data(capture));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("服务端推送服务发生异常", e);
 		}
 		
 		return emitter;
