@@ -1,7 +1,6 @@
 package com.tianya.springboot.websocket.handle.impl;
 
 import java.util.LinkedHashSet;
-import java.util.Objects;
 
 import javax.websocket.Session;
 
@@ -21,9 +20,10 @@ public class ChatAppIdMsgHandleImpl implements AppIdMsgHandle{
 		LinkedHashSet<Session> sessions = WebSocketServer.getSessions(APP_ID);
 		if (sessions != null) {
 			for (Session otherSession : sessions) {
-				if (!Objects.equals(otherSession, session)) {
+				// 排除自己
+//				if (!Objects.equals(otherSession, session)) {
 					WebSocketServer.sendTxtMsg(otherSession, message);
-				}
+//				}
 			}
 		}
 		

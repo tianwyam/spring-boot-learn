@@ -13,23 +13,26 @@ $(function() {
     }
 
     // 打开时
-    websocket.onopen = function(evnt) {
+    websocket.onopen = function(event) {
         console.log("  websocket.onopen  ");
+        console.log(event);
+        $("#msg").append("<p>(<font color='blue'>欢迎加入聊天群</font>)</p>");
     };
 
 
     // 处理消息时
-    websocket.onmessage = function(evnt) {
-        $("#msg").append("<p>(<font color='red'>" + evnt.data + "</font>)</p>");
+    websocket.onmessage = function(event) {
+    	console.log(event);
+        $("#msg").append("<p>(<font color='red'>" + event.data + "</font>)</p>");
         console.log("  websocket.onmessage   ");
     };
 
 
-    websocket.onerror = function(evnt) {
+    websocket.onerror = function(event) {
         console.log("  websocket.onerror  ");
     };
 
-    websocket.onclose = function(evnt) {
+    websocket.onclose = function(event) {
         console.log("  websocket.onclose  ");
     };
 
@@ -46,14 +49,15 @@ $(function() {
             return false;
         }
 
-        var msg = {
-            msgContent: text,
-            postsId: 1
-        };
+//        var msg = {
+//            msgContent: text,
+//            postsId: 1,
+//            sendTime: new Date()
+//        };
 
         // 发送消息
-        websocket.send(JSON.stringify(msg));
-
+        websocket.send(text);
+        $("#tx").val('');
     });
 
 
