@@ -1,0 +1,12 @@
+
+server:  port: 8080
+  
+  servlet:    context-path: /
+    
+
+## swagger 做简单认证权限
+swagger:
+  auth:
+    enable: true
+    userName: admin
+    password: 123456

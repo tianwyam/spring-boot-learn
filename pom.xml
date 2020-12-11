@@ -38,5 +38,7 @@
 		<module>spring-boot-learn-mybatis</module>
 		<module>spring-boot-learn-capture-screen</module>
 		<module>spring-boot-learn-websocket</module>
+		<module>spring-boot-learn-validation</module>
+		<module>spring-boot-learn-swagger</module>
 	</modules>
 </project>
