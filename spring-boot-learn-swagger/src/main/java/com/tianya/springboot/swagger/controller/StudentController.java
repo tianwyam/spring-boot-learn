@@ -26,4 +26,21 @@ public class StudentController {
 				.age(23)
 				.build());
 	}
+	
+	
+	
+	@GetMapping("/list")
+	@ApiOperation(value = "获取学生列表")
+	public ResultUtis list() {
+		return ResultUtis.success(StudentBean.builder()
+				.id(12)
+				.name("tianya")
+				.addr("成都")
+				.age(23)
+				.build());
+	}
+	
+	
+	
+	
 }

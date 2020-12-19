@@ -10,3 +10,9 @@ swagger:
     enable: true
     userName: admin
     password: 123456
+    
+  ## 扫描包
+  basePackage: com.tianya.springboot.swagger
+  
+  ## 自定义设置 过滤包
+  ignorePackages: com.tianya.springboot.swagger.test.controller
