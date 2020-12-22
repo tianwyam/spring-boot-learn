@@ -40,5 +40,6 @@
 		<module>spring-boot-learn-websocket</module>
 		<module>spring-boot-learn-validation</module>
 		<module>spring-boot-learn-swagger</module>
+		<module>spring-boot-learn-mybatis-generator</module>
 	</modules>
 </project>
