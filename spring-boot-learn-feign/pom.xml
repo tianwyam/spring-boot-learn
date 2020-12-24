@@ -25,6 +25,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <version>2.0.2.RELEASE</version>
 		</dependency>
 
+		
+		<dependency>
+			<groupId>com.tianya.springboot</groupId>
+			<artifactId>spring-boot-learn-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
   
   </dependencies>
   
