@@ -1,0 +1,14 @@
+
+server:  port: 8081
+  servlet:    context-path: /
+    
+
+spring:
+#  datasource:
+#    username: root
+#    password: mysql
+#    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+#    driver-class-name: com.mysql.jdbc.Driver
+#   application:    name: web-learn
+    
+    
