@@ -11,6 +11,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
     <version>1.0.0</version>
   </parent>
   
+  <properties>
+  	<feign.version>9.7.0</feign.version>
+  </properties>
+  
   <dependencies>
   
  	
@@ -19,10 +23,51 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		<!-- 用于springboot项目环境下，或者springcloud项目环境下 集成 feign -->
 		<dependency>
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-openfeign</artifactId>
 		    <version>2.0.2.RELEASE</version>
+		</dependency>
+		
+		<!-- 以下几个用于 spring环境、springmvc环境下的，或者 不是 spring容器内的项目 集成 feign -->
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-core</artifactId>
+    		<version>${feign.version}</version>
+		</dependency>
+		
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-gson</artifactId>
+    		<version>${feign.version}</version>
+		</dependency>
+		
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-jackson</artifactId>
+    		<version>${feign.version}</version>
+		</dependency>
+
+		
+		
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-httpclient</artifactId>
+    		<version>${feign.version}</version>
+		</dependency>
+		
+		
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-okhttp</artifactId>
+    		<version>${feign.version}</version>
+		</dependency>
+		
+		 <dependency>
+		     <groupId>io.github.openfeign</groupId>
+		     <artifactId>feign-ribbon</artifactId>
+    		<version>${feign.version}</version>
 		</dependency>
 
 		
@@ -30,6 +75,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<groupId>com.tianya.springboot</groupId>
 			<artifactId>spring-boot-learn-common</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.73</version>
 		</dependency>
   
   </dependencies>
