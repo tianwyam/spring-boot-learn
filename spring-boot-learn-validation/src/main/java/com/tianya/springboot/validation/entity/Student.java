@@ -2,7 +2,8 @@ package com.tianya.springboot.validation.entity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 import com.tianya.springboot.validation.type.ValidType;
 
@@ -21,10 +22,9 @@ public class Student {
 	
 	private String addr ;
 	
-	@Size(min = 0, max = 200)
+	@Range(max = 300, message = "年龄不能超过300")
 	private int age ;
 	
-	@Size(min = 1, max = 300)
 	private int height ;
 	
 	private String phone ;
