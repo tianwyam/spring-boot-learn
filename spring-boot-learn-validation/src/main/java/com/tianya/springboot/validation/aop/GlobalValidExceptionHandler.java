@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.tianya.springboot.common.entity.ResultCode;
 import com.tianya.springboot.common.entity.ResultUtis;
 
 
@@ -88,6 +89,12 @@ public class GlobalValidExceptionHandler {
 		}
 		
 		return ResultUtis.error(6103, errorMsg);
+	}
+	
+	
+	@ExceptionHandler(Exception.class)
+	public ResultUtis validException(Exception e) {
+		return ResultUtis.error(ResultCode.SERVER_ERROR);
 	}
 	
 	

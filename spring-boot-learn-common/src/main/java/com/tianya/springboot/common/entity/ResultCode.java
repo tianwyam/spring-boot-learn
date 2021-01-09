@@ -5,7 +5,9 @@ public enum ResultCode {
 	
 	SUCCESS(200, "成功"),
 	
-	ERROR(400, "失败")
+	ERROR(400, "失败"),
+	
+	SERVER_ERROR(500, "服务发生异常")
 	
 	;
 	

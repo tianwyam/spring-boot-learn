@@ -20,6 +20,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		</dependency>
 		
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		
+		<dependency>
 			<groupId>com.tianya.springboot</groupId>
 			<artifactId>spring-boot-learn-common</artifactId>
 			<version>${project.version}</version>
