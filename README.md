@@ -8,7 +8,7 @@
 
 目录：
 
-- ## spring-boot-learn-word
+## spring-boot-learn-word
 
   针对word的操作：
 
@@ -17,7 +17,7 @@
 
   
 
-- ## spring-boot-learn-excel
+## spring-boot-learn-excel
 
   针对excel的操作：
 
@@ -25,7 +25,7 @@
 
 
 
-- ## spring-boot-learn-crawler-webmagic
+## spring-boot-learn-crawler-webmagic
 
   简单学习WebMagic，是一个简单灵活的Java爬虫框架
 
@@ -34,7 +34,7 @@
 
 
 
-- ## spring-boot-learn-mybatis
+## spring-boot-learn-mybatis
 
   spring boot整合mybatis持久层框架
 
@@ -135,7 +135,7 @@ public interface IUserMapper {
 
 
 
-- ## spring-boot-learn-capture-screen
+## spring-boot-learn-capture-screen
   使用服务端推送技术SSE+屏幕截屏，实现一个简单的屏幕共享功能
   - SseEmitter 实现服务端推送功能
   - java.awt.Toolkit 获取屏幕截屏
@@ -543,4 +543,193 @@ html界面
 </html>
 
 ~~~
+
+
+## spring-boot-learn-validation
+
+针对项目做参数校验
+
+采用：
+
+- spring validation
+- hibernate validator
+
+
+
+
+
+第一步：做全局异常处理：
+
+~~~java
+/**
+ * @description
+ *	全局异常校验处理
+ * @author TianwYam
+ * @date 2020年12月25日下午7:22:47
+ */
+@RestControllerAdvice
+public class GlobalValidExceptionHandler {
+	
+	/**
+	 * @description
+	 *	类绑定异常
+	 * @author TianwYam
+	 * @date 2020年12月28日下午5:14:27
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResultUtis validBeanException(ConstraintViolationException e) {
+		String errorMsg = "" ;
+		Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
+		for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+			errorMsg = constraintViolation.getMessage();
+			break;
+		}
+		return ResultUtis.error(6101, errorMsg);
+	}
+	
+	
+	/**
+	 * @description
+	 *	方法参数校验异常
+	 * @author TianwYam
+	 * @date 2020年12月28日下午5:16:02
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResultUtis validMethodException(MethodArgumentNotValidException e) {
+		String errorMsg = "" ;
+		List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+		for (ObjectError objectError : allErrors) {
+			errorMsg = objectError.getDefaultMessage();
+			break;
+		}
+		return ResultUtis.error(6102, errorMsg);
+	}
+	
+	
+	/**
+	 * @description
+	 *	参数绑定异常
+	 * @author TianwYam
+	 * @date 2020年12月28日下午5:17:11
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(BindException.class)
+	public ResultUtis validBindException(BindException e) {
+		String errorMsg = "" ;
+		List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+		for (ObjectError objectError : allErrors) {
+			errorMsg = objectError.getDefaultMessage();
+			break;
+		}
+		return ResultUtis.error(6103, errorMsg);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResultUtis validException(Exception e) {
+		return ResultUtis.error(ResultCode.SERVER_ERROR);
+	}
+
+}
+
+~~~
+
+
+
+第二步：在对应参数类、参数值变量等上面加校验注解
+
+~~~java
+
+@Data
+@Builder
+public class Student {
+	
+	@NotBlank(message = "学号不能为空", groups = {ValidType.Update.class, ValidType.Delete.class})
+	private int id ;
+	
+	@NotBlank(message = "学生姓名不可以为空", groups = {ValidType.Insert.class})
+	private String name ;
+	
+	private String addr ;
+	
+	@Range(max = 300, message = "年龄不能超过300")
+	private int age ;
+	
+	private int height ;
+	
+	private String phone ;
+	
+	private String idcard ;
+	
+	@Email(message = "邮箱格式错误")
+	private String email ;
+
+}
+~~~
+
+
+
+第三步：在对应调用处添加验证注解 @Validated 或者 @Valid
+
+~~~java
+	@PostMapping("/")
+	public ResultUtis add(
+			@RequestBody 
+			@Validated(ValidType.Insert.class) 
+			Student student) {
+		
+		return ResultUtis.success(student);
+	}
+~~~
+
+
+
+注意：
+
+分组校验时采用 @Validated
+
+嵌套校验时，子校验采用 @Valid
+
+
+
+自定义分组：
+
+~~~java
+public interface ValidType {
+	
+	// 若是不继承 Default，则分组校验只会校验 相应加了 update组检验的属性才能校验，没有添加的，是不会校验的
+	interface Update extends Default{}
+	
+	interface Selete extends Default{}
+	
+	interface Delete extends Default{}
+	
+	interface Insert extends Default{}
+	
+}
+
+~~~
+
+注意：若是不继承 Default，则分组校验只会校验 相应加了 update组检验的属性才能校验，没有添加的，是不会校验的
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
