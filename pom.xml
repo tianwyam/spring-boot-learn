@@ -43,5 +43,6 @@
 		<module>spring-boot-learn-mybatis-generator</module>
 		<module>spring-boot-learn-feign</module>
 		<module>spring-boot-learn-web</module>
+		<module>spring-boot-learn-security</module>
 	</modules>
 </project>

@@ -1,0 +1,12 @@
+
+
+server:  port: 8080
+  servlet:    context-path: /
+    
+    
+# spring security 自定义用户名密码
+spring:  security:    user:      name: admin
+      password: admin
+    
+
+logging:  level:    root: info
