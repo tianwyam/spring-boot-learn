@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:    context-path: /
+    
+spring:  datasource:    url: jdbc:h2:file:./db/h2.db
+    driver-class-name: org.h2.Driver
+    username: user
+    password: admin
+    
+ ## 开启后 可以访问 控制台  h2:    console:      enabled: true
+      #控制台访问地址 http://localhost:port/contextPath/h2-console
+      path: /h2-console
+      settings:        trace: true
+        web-allow-others: true
+        
+        
+logging:  level:    root: debug
