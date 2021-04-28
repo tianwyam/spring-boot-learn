@@ -21,6 +21,98 @@
   - spire.doc.free 简单示例
   - itextpdf实现对生成后的PDF添加页码示例
 
+
+
+### 给PDF文件添加文本水印
+
+
+
+第一步：导入依赖
+
+~~~xml
+
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.13.1</version>
+</dependency>
+
+<!-- 字体依赖 -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itext-asian</artifactId>
+    <version>5.2.0</version>
+</dependency>
+
+~~~
+
+
+
+第二步：编写代码
+
+~~~java
+
+/**
+ * @description
+ *	给PDF文档添加水印
+ * @author TianwYam
+ * @date 2021年4月28日上午10:00:05
+ */
+public static void addWaterMark(String pdfFilePath, String outputFilePath) {
+	
+	
+	try {
+		// 原PDF文件
+		PdfReader reader = new PdfReader(pdfFilePath);
+		// 输出的PDF文件内容
+		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputFilePath));
+		
+		// 字体
+		BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", true);
+
+		PdfGState gs = new PdfGState(); 
+		// 设置透明度
+		gs.setFillOpacity(0.3f); 
+		gs.setStrokeOpacity(0.4f);
+		
+		int totalPage = reader.getNumberOfPages() + 1;
+		for (int i = 1; i < totalPage; i++) {
+			// 内容上层
+//				PdfContentByte content = stamper.getOverContent(i);
+			// 内容下层
+			PdfContentByte content = stamper.getUnderContent(i);
+			
+			content.beginText();
+			// 字体添加透明度
+			content.setGState(gs);
+			// 添加字体大小等
+			content.setFontAndSize(baseFont, 50);
+			// 添加范围
+			content.setTextMatrix(70, 200);
+			// 具体位置 内容 旋转多少度
+			content.showTextAligned(Element.ALIGN_CENTER, "机密文件", 300, 350, 300);
+			content.showTextAligned(Element.ALIGN_TOP, "机密文件", 100, 100, 5);
+			content.showTextAligned(Element.ALIGN_BOTTOM, "机密文件", 400, 400, 75);
+			
+			content.endText();
+		}
+		
+		// 关闭流
+		stamper.close();
+		reader.close();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+}
+
+~~~
+
+
+
+
+
   
 
 ## spring-boot-learn-excel
