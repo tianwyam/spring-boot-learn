@@ -44,5 +44,6 @@
 		<module>spring-boot-learn-feign</module>
 		<module>spring-boot-learn-web</module>
 		<module>spring-boot-learn-security</module>
+		<module>spring-boot-learn-h2database</module>
 	</modules>
 </project>
