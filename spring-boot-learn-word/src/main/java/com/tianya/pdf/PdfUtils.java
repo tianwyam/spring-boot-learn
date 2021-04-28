@@ -3,10 +3,14 @@ package com.tianya.pdf;
 import java.io.FileOutputStream;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
@@ -65,6 +69,86 @@ public class PdfUtils {
 		
 		return outputPdfPath ;
 	}
+	
+	
+	
+	/**
+	 * @description
+	 *	给PDF文档添加水印
+	 * @author TianwYam
+	 * @date 2021年4月28日上午10:00:05
+	 */
+	public static void addWaterMark(String pdfFilePath, String outputFilePath) {
+		
+		
+		try {
+			// 原PDF文件
+			PdfReader reader = new PdfReader(pdfFilePath);
+			// 输出的PDF文件内容
+			PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputFilePath));
+			
+			// 字体
+			BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", true);
+
+			PdfGState gs = new PdfGState(); 
+			// 设置透明度
+            gs.setFillOpacity(0.3f); 
+            gs.setStrokeOpacity(0.4f);
+			
+			int totalPage = reader.getNumberOfPages() + 1;
+			for (int i = 1; i < totalPage; i++) {
+				// 内容上层
+//				PdfContentByte content = stamper.getOverContent(i);
+				// 内容下层
+				PdfContentByte content = stamper.getUnderContent(i);
+				
+				content.beginText();
+				// 字体添加透明度
+				content.setGState(gs);
+				// 添加字体大小等
+				content.setFontAndSize(baseFont, 50);
+				// 添加范围
+				content.setTextMatrix(70, 200);
+				// 具体位置 内容 旋转多少度
+				content.showTextAligned(Element.ALIGN_CENTER, "机密文件", 300, 350, 300);
+				content.showTextAligned(Element.ALIGN_TOP, "机密文件", 100, 100, 5);
+				content.showTextAligned(Element.ALIGN_BOTTOM, "机密文件", 400, 400, 75);
+				
+				content.endText();
+			}
+			
+			
+			stamper.close();
+			reader.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		
+		
+		addWaterMark("M://w2p.pdf", "M://p.pdf");
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
