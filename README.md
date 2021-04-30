@@ -14,6 +14,143 @@
 
 
 
+
+
+## spring-boot-learn-jsp
+
+
+
+spring boot集成JSP
+
+### 集成JSP
+
+
+
+第一步：添加依赖
+
+~~~xml
+
+<!-- spring boot web -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<!-- servlet api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+</dependency>
+
+<!-- JSTL（JSP Standard Tag Library，JSP标准标签库) -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+</dependency>
+
+<!-- tomcat 中JSP的解析器 -->
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+~~~
+
+
+
+第二步：主配置application.yml文件
+
+spring boot 版本不一样配置也不一样
+
+~~~yaml
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    
+    
+spring:
+  mvc:
+    view:
+      # 前缀
+      prefix: /WEB-INF/
+      # 后缀
+      suffix: .jsp  
+~~~
+
+
+
+第三步：编写控制器
+
+~~~java
+@Controller
+public class IndexController {
+	
+	@GetMapping("/index")
+	public String index() {
+		return "index" ;
+	}
+
+}
+~~~
+
+启动类：
+
+~~~java
+@SpringBootApplication
+public class JspLearnApplication {
+	
+	public static void main(String[] args) {
+		SpringApplication.run(JspLearnApplication.class, args);
+	}
+}
+~~~
+
+
+
+
+
+第四步：新建JSP文件
+
+目前只有两种位置放JSP，才能不报404资源找不到错误
+
+1、/resources/META-INF/resourcesWEB-INF/
+
+2、/webapp/WEB-INF/
+
+
+
+其他位置，都报找不到资源404
+
+
+
+位置：webapp/WEB-INF/
+
+~~~jsp
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+</head>
+<body>
+	INDEX JSP | /webapp/WEB-INF/index.jsp
+</body>
+</html>
+~~~
+
+
+
+JSP位置放不对，很容易导致资源访问不到问题
+
+
+
+
+
+
+
 ## spring-boot-learn-word
 
   针对word的操作：

@@ -5,8 +5,16 @@ server:  port: 8080
   servlet:    context-path: /
     
     
-spring:  mvc:    view:      prefix: /
+spring:  mvc:    view:
+      # 前缀      prefix: /WEB-INF/
+      # 后缀
       suffix: .jsp
-      
+    
       
 logging:  level:    root: debug
+    sun.rmi: error
+    org.springframework.boot.autoconfigure.logging: error
+    org.apache.tomcat.util: error
+    
+    
+    

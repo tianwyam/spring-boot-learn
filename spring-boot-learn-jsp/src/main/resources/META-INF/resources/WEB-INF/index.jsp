@@ -3,9 +3,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>首页</title>
 </head>
 <body>
-	INDEX JSP
+	INDEX JSP | /resources/META-INF/resources/WEB-INF/index.jsp
 </body>
 </html>
