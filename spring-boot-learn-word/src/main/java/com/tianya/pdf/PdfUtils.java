@@ -87,7 +87,7 @@ public class PdfUtils {
 			// 输出的PDF文件内容
 			PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputFilePath));
 			
-			// 字体
+			// 字体 来源于 itext-asian JAR包
 			BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", true);
 
 			PdfGState gs = new PdfGState(); 
@@ -109,7 +109,7 @@ public class PdfUtils {
 				content.setFontAndSize(baseFont, 50);
 				// 添加范围
 				content.setTextMatrix(70, 200);
-				// 具体位置 内容 旋转多少度
+				// 具体位置 内容 旋转多少度 共360度
 				content.showTextAligned(Element.ALIGN_CENTER, "机密文件", 300, 350, 300);
 				content.showTextAligned(Element.ALIGN_TOP, "机密文件", 100, 100, 5);
 				content.showTextAligned(Element.ALIGN_BOTTOM, "机密文件", 400, 400, 75);
@@ -117,7 +117,7 @@ public class PdfUtils {
 				content.endText();
 			}
 			
-			
+			// 关闭
 			stamper.close();
 			reader.close();
 			
@@ -130,20 +130,11 @@ public class PdfUtils {
 	
 	
 	
-	
-	
-	
-	
 	public static void main(String[] args) {
 		
 		
-		
-		addWaterMark("M://w2p.pdf", "M://p.pdf");
-		
-		
+		addWaterMark("E:\\javaWork\\test.pdf", "E:\\javaWork\\test2.pdf");
 	}
-	
-	
 	
 	
 	

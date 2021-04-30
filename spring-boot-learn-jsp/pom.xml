@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-boot-learn-jsp</artifactId>
+  
+  <parent>
+    <groupId>com.tianya.springboot</groupId>
+    <artifactId>spring-boot-learn</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  
+  <dependencies>
+  
+		
+	<!-- spring boot web  -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	
+	 <dependency>
+	     <groupId>javax.servlet</groupId>
+	     <artifactId>javax.servlet-api</artifactId>
+	 </dependency>
+	
+	 <!-- JSTL（JSP Standard Tag Library，JSP标准标签库) -->
+	 <dependency>
+	     <groupId>javax.servlet</groupId>
+	     <artifactId>jstl</artifactId>
+	 </dependency>
+	
+	 <!-- TOMCAT 的支持.-->
+	 <dependency>
+	     <groupId>org.springframework.boot</groupId>
+	     <artifactId>spring-boot-starter-tomcat</artifactId>
+	 </dependency>
+	
+	 <dependency>
+	     <groupId>org.apache.tomcat.embed</groupId>
+	     <artifactId>tomcat-embed-jasper</artifactId>
+	 </dependency>
+	
+<!-- 	 <dependency>
+	     <groupId>org.eclipse.jdt.core.compiler</groupId>
+	     <artifactId>ecj</artifactId>
+	     <version>4.6.1</version>
+	     <scope>provided</scope>
+	 </dependency>
+	 	 -->
+	 	
+  
+  </dependencies>
+  
+</project>

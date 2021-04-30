@@ -45,5 +45,6 @@
 		<module>spring-boot-learn-web</module>
 		<module>spring-boot-learn-security</module>
 		<module>spring-boot-learn-h2database</module>
+		<module>spring-boot-learn-jsp</module>
 	</modules>
 </project>
