@@ -119,7 +119,9 @@ public class JspLearnApplication {
 
 2、/webapp/WEB-INF/
 
+ 若是两个位置都存在相同资源
 
+​	则优先级：/webapp/WEB-INF/  大于 /resources/META-INF/resourcesWEB-INF/
 
 其他位置，都报找不到资源404
 
