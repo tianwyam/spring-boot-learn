@@ -1,0 +1,14 @@
+
+server:  port: 8080
+  servlet:    context-path: /
+    
+spring:
+  freemarker:    cache: false
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    prefix: /
+    suffix: .html
+    #  mvc:#    view:#      prefix: /
+#      suffix: .html
+#      
+logging:  level:    root: debug

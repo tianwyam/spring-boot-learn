@@ -46,5 +46,6 @@
 		<module>spring-boot-learn-security</module>
 		<module>spring-boot-learn-h2database</module>
 		<module>spring-boot-learn-jsp</module>
+		<module>spring-boot-learn-freemarker</module>
 	</modules>
 </project>
