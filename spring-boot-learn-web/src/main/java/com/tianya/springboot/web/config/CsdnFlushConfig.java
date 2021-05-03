@@ -17,7 +17,7 @@ public class CsdnFlushConfig {
 	private RestTemplate restTemplate ;
 	
 	
-	@Scheduled(cron = "0 * * * * ?")
+	@Scheduled(cron = "1 * * * * ?")
 	public void flushCsdn() {
 		
 
