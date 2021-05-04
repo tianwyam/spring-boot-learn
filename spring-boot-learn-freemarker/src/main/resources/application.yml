@@ -2,6 +2,7 @@
 server:  port: 8080
   servlet:    context-path: /
     
+#freemarker的配置
 spring:
   freemarker:    cache: false
     charset: UTF-8

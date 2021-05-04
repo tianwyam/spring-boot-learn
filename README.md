@@ -12,6 +12,30 @@
 
 
 
+## spring-boot-learn-freemarker
+
+
+
+spring boot集成freemarker
+
+
+
+### freemarker实现转word
+
+
+
+第一步：制作word模板
+
+第二步：word模板转xml文件
+
+第三步：修改xml文件内容(添加freemarker语法)
+
+第四步：修改xml文件后缀为.ftl
+
+第五步：使用freemarker的API语法实现输出word文件
+
+
+
 
 
 
