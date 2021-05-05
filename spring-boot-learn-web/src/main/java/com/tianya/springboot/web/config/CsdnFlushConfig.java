@@ -30,7 +30,7 @@ public class CsdnFlushConfig {
 		headers.set("referer", "https://blog.csdn.net/mybook201314?spm=1010.2135.3001.5343");
 		headers.set("authority", "blog.csdn.net");
 		headers.set("method", "GET");
-		headers.set("path", "/mybook201314/article/details/116303541");
+		headers.set("path", "/mybook201314/article/details/116398838");
 		headers.set("scheme", "https");
 		headers.set("accept-encoding", "gzip, deflate, br");
 		headers.set("cache-control", "max-age=0");
@@ -39,7 +39,7 @@ public class CsdnFlushConfig {
 		HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
 
-		String url = "https://blog.csdn.net/mybook201314/article/details/116303541";
+		String url = "https://blog.csdn.net/mybook201314/article/details/116398838";
 		restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 		
 		System.out.println("刷新CSDN阅读量 成功 ");

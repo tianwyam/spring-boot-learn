@@ -5,12 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.tianya.springboot.freemarker.entity.Courses;
 import com.tianya.springboot.freemarker.entity.Student;
 
@@ -61,19 +59,19 @@ public class FreeMarkerUtils {
 	
 	/**
 	 * @Description: 
-	 *  输出word文件
+	 *  填充模板，输出文件
 	 * @author: TianwYam
 	 * @date 2021年5月4日 上午9:41:37
-	 * @param wordOutputPath word文件输出的全路径
+	 * @param outputFilePath 填充后的文件输出的全路径
 	 * @param templateName 模板的名称
 	 * @param data 需要填充的数据
 	 */
-	public static void outputWord(String wordOutputPath, String templateName, Map<String, Object> data) {
+	public static void fillTemplate(String outputFilePath, String templateName, Object data) {
 		
 		Template template = getTemplate(templateName);
 		if (template != null) {
 			try {
-				template.process(data, new FileWriter(wordOutputPath));
+				template.process(data, new FileWriter(outputFilePath));
 				LOG.info("生成word文件成功");
 			} catch (TemplateException | IOException e) {
 				LOG.error("生成word文件失败", e);
@@ -107,7 +105,7 @@ public class FreeMarkerUtils {
 				.build();
 		
 		// 生成word文件
-		outputWord("E:\\javaWork\\freemarker\\student.docx", "student.ftl", JSON.parseObject(JSON.toJSONString(student)));
+		fillTemplate("E:\\javaWork\\freemarker\\student.docx", "student.ftl", student);
 	}
 	
 	
