@@ -67,13 +67,29 @@ public class JwtUtils {
 	
 	
 	
-	
+	/**
+	 * @description
+	 *	使用BASE64加密
+	 * @author TianwYam
+	 * @date 2021年5月21日上午10:18:17
+	 * @param content
+	 * @return
+	 */
 	public static String encode(String content) {
 		return Base64.getEncoder()
 				.encodeToString(content.getBytes());
 	}
 	
 	
+	
+	/**
+	 * @description
+	 *	使用BASE64解密
+	 * @author TianwYam
+	 * @date 2021年5月21日上午10:18:33
+	 * @param content
+	 * @return
+	 */
 	public static String decode(String content) {
 		return new String(Base64.getDecoder()
 				.decode(content));

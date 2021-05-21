@@ -7,6 +7,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class RequestUtils {
 	
+	/**
+	 * @description
+	 *	从容器中取请求 request
+	 * @author TianwYam
+	 * @date 2021年5月21日上午10:18:59
+	 * @return
+	 */
 	public static HttpServletRequest getRequest() {
 		
 		ServletRequestAttributes attributes =(ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -18,6 +25,14 @@ public class RequestUtils {
 	}
 	
 	
+	/**
+	 * @description
+	 *	从请求request中取header
+	 * @author TianwYam
+	 * @date 2021年5月21日上午10:19:24
+	 * @param name
+	 * @return
+	 */
 	public static String getHeader(String name) {
 		
 		
