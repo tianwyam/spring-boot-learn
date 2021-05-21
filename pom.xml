@@ -47,5 +47,6 @@
 		<module>spring-boot-learn-h2database</module>
 		<module>spring-boot-learn-jsp</module>
 		<module>spring-boot-learn-freemarker</module>
+		<module>spring-boot-learn-jwt</module>
 	</modules>
 </project>
