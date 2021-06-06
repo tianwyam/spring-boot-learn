@@ -16,7 +16,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  *	<p>
  *	添加页码的同时，也添加总页数
  * @author TianwYam
- * @date 2019年12月28日下午8:51:08
+ * @date 2021年06月06日上午11:51:08
  */
 public class PageNumAndTotalPdfPageEvent extends PdfPageEventHelper{
 	
@@ -27,6 +27,10 @@ public class PageNumAndTotalPdfPageEvent extends PdfPageEventHelper{
 		super();
 	}
 	
+	/**
+	 * 传入总页码
+	 * @param pageNums 总页码
+	 */
 	public PageNumAndTotalPdfPageEvent(int pageNums) {
 		super();
 		this.totalPageNums = pageNums ;
@@ -53,7 +57,7 @@ public class PageNumAndTotalPdfPageEvent extends PdfPageEventHelper{
 			
 			pdfContent.setFontAndSize(baseFont, footerFontSize);
 			
-			// 页脚的页码 展示
+			// 页脚的页码 展示 总页码
 			String footerNum = String.format("第%d页 共%d页", writer.getPageNumber(), totalPageNums);
 			Phrase phrase = new Phrase(footerNum, fontDetail);
 			
