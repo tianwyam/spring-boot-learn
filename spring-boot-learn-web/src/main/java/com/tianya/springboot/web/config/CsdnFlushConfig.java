@@ -41,6 +41,12 @@ public class CsdnFlushConfig {
 		
 		String csdnUrl = "https://blog.csdn.net" ;
 		List<String> urlList = Arrays.asList(
+				"/mybook201314/article/details/116542986",
+				"/mybook201314/article/details/116952009",
+				"/mybook201314/article/details/117002272",
+				"/mybook201314/article/details/117338648",
+				"/mybook201314/article/details/117406657",
+				"/mybook201314/article/details/117451022",
 				"/mybook201314/article/details/102641119",
 				"/mybook201314/article/details/115336106",
 				"/mybook201314/article/details/116398838",

@@ -38,11 +38,11 @@
 		</dependency> -->
 		
 		<!-- WORD -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>e-iceblue</groupId>
 			<artifactId>spire.doc.free</artifactId>
 			<version>3.9.0</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- OFFICE -->
 		<!-- <dependency>
