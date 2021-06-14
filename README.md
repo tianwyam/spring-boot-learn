@@ -19,13 +19,28 @@
 - [spring-boot-learn](#spring-boot-learn)
 
   - [spring-boot-learn-jwt](#spring-boot-learn-jwt)
+
     - [JWT简单使用](#JWT简单使用)
 
   - [spring-boot-learn-freemarker](#spring-boot-learn-freemarker)
+
     - [freemarker实现转word](#freemarker实现转word)
 
   - [spring-boot-learn-jsp](#spring-boot-learn-jsp)
+
     - [集成JSP](#集成JSP)
+
+  - [spring-boot-learn-word](#spring-boot-learn-word)
+
+    - [给PDF文件添加文本水印](#给PDF文件添加文本水印)
+
+  - [spring-boot-learn-feign](#spring-boot-learn-feign)
+
+    - [第一种，在springboot环境下](#第一种，在springboot环境下)
+    - [第二种，不在spring环境下](#第二种，不在spring环境下)
+    - [spring-boot-learn-capture-screen](#spring-boot-learn-capture-screen)
+      - [获取屏幕截屏](#获取屏幕截屏)
+      - [服务端推送](#服务端推送)
 
   
 
@@ -132,6 +147,10 @@ public static TokenReqBean checkToken(String token) {
 
 
 
+<br/>
+
+
+
 
 
 ## spring-boot-learn-freemarker
@@ -139,6 +158,10 @@ public static TokenReqBean checkToken(String token) {
 
 
 spring boot集成freemarker
+
+
+
+<br/>
 
 
 
@@ -160,6 +183,10 @@ spring boot集成freemarker
 
 
 
+<br/>
+
+<br/>
+
 
 
 ## spring-boot-learn-jsp
@@ -167,6 +194,12 @@ spring boot集成freemarker
 
 
 spring boot集成JSP
+
+
+
+<br/>
+
+
 
 ### 集成JSP
 
@@ -297,6 +330,10 @@ JSP位置放不对，很容易导致资源访问不到问题
 
 
 
+<br/>
+
+
+
 
 
 ## spring-boot-learn-word
@@ -305,6 +342,10 @@ JSP位置放不对，很容易导致资源访问不到问题
 
   - spire.doc.free 简单示例
   - itextpdf实现对生成后的PDF添加页码示例
+
+
+
+<br/>
 
 
 
@@ -398,6 +439,10 @@ public static void addWaterMark(String pdfFilePath, String outputFilePath) {
 
 
 
+<br/>
+
+
+
   
 
 ## spring-boot-learn-excel
@@ -408,12 +453,20 @@ public static void addWaterMark(String pdfFilePath, String outputFilePath) {
 
 
 
+<br/>
+
+
+
 ## spring-boot-learn-crawler-webmagic
 
   简单学习WebMagic，是一个简单灵活的Java爬虫框架
 
   - 使用webmagic爬取了笔趣阁小说类别
   - 爬取了笔趣阁小说《剑来》目录
+
+
+
+<br/>
 
 
 
@@ -518,12 +571,31 @@ public interface IUserMapper {
 
 
 
+<br/>
+
+
+
 ## spring-boot-learn-capture-screen
+
+
+
+<br/>
+
+
+
   使用服务端推送技术SSE+屏幕截屏，实现一个简单的屏幕共享功能
   - SseEmitter 实现服务端推送功能
   - java.awt.Toolkit 获取屏幕截屏
 
-**获取屏幕截屏**
+
+
+<br/>
+
+
+
+### **获取屏幕截屏**
+
+
 
 ~~~java
 
@@ -560,7 +632,17 @@ public static String capture() {
 
 
 
-**服务端推送**
+<br/>
+
+
+
+### **服务端推送**
+
+
+
+<br/>
+
+
 
 方式一：自己拼接返回参数值
 
@@ -629,6 +711,8 @@ source.onmessage = function(event){
 
 
 
+
+<br/>
 
 
 
@@ -928,7 +1012,14 @@ html界面
 ~~~
 
 
+
+<br/>
+
+
+
 ## spring-boot-learn-validation
+
+
 
 针对项目做参数校验
 
@@ -1103,6 +1194,10 @@ public interface ValidType {
 
 
 
+<br/>
+
+
+
 
 
 
@@ -1116,6 +1211,10 @@ spring boot中使用feign，实现请求第三方接口，作为一个 http请�
 
 
 分为两种使用方式：第一种，在springboot环境下；第二种，不在spring环境下
+
+
+
+<br/>
 
 
 
@@ -1191,6 +1290,10 @@ public class StudentController {
 ~~~
 
 
+
+
+
+<br/>
 
 
 
@@ -1330,4 +1433,10 @@ public class FeignClientUtils {
 	}
 }
 ~~~
+
+
+
+
+
+
 
