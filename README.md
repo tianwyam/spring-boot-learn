@@ -38,7 +38,8 @@
 
     - [第一种，在springboot环境下](#第一种，在springboot环境下)
     - [第二种，不在spring环境下](#第二种，不在spring环境下)
-    - [spring-boot-learn-capture-screen](#spring-boot-learn-capture-screen)
+
+  - [spring-boot-learn-capture-screen](#spring-boot-learn-capture-screen)
       - [获取屏幕截屏](#获取屏幕截屏)
       - [服务端推送](#服务端推送)
 
@@ -593,7 +594,7 @@ public interface IUserMapper {
 
 
 
-### **获取屏幕截屏**
+### 获取屏幕截屏
 
 
 
@@ -636,7 +637,7 @@ public static String capture() {
 
 
 
-### **服务端推送**
+### 服务端推送
 
 
 
