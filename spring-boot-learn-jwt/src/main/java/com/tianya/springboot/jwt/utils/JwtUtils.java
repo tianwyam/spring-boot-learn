@@ -35,11 +35,14 @@ public class JwtUtils {
 	public static String token(TokenReqBean tokenReqBean) {
 		
 		long nowTime = System.currentTimeMillis();
-		
+		// 私钥 不允许给其他人
 		Algorithm algorithm = Algorithm.HMAC256(secret);
 		return JWT.create()
+				// 内容
 				.withSubject(encode(JSON.toJSONString(tokenReqBean)))
+				// token生成时刻
 				.withIssuedAt(new Date(nowTime))
+				// 过期时刻
 				.withExpiresAt(new Date(nowTime + EXPIRES_TIME))
 				.sign(algorithm);
 	}

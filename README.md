@@ -12,6 +12,99 @@
 
 
 
+
+
+## 	spring-boot-learn-jwt
+
+
+
+spring boot集成JWT，实现token认证
+
+
+
+### JWT简单使用
+
+
+
+第一步：导入依赖
+
+~~~xml
+
+<!-- JWT -->
+<dependency>
+	<groupId>com.auth0</groupId>
+	<artifactId>java-jwt</artifactId>
+	<version>3.8.1</version>
+</dependency>
+
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt</artifactId>
+	<version>0.9.1</version>
+</dependency>
+
+~~~
+
+
+
+第二步：使用JWT工具类生成token(用于生成token)
+
+~~~java
+
+/**
+ * @description
+ *	生成TOKEN
+ * @author TianwYam
+ * @date 2021年5月19日下午5:43:36
+ * @param tokenReqBean
+ * @return
+ */
+public static String token(TokenReqBean tokenReqBean) {
+	
+	long nowTime = System.currentTimeMillis();
+	// 私钥 不允许给其他人
+	Algorithm algorithm = Algorithm.HMAC256(secret);
+	return JWT.create()
+			// 内容
+			.withSubject(encode(JSON.toJSONString(tokenReqBean)))
+			// token生成时刻
+			.withIssuedAt(new Date(nowTime))
+			// 过期时刻
+			.withExpiresAt(new Date(nowTime + EXPIRES_TIME))
+			.sign(algorithm);
+}
+
+~~~
+
+
+
+第三步：验证token
+
+~~~java
+
+/**
+ * @description
+ *	验证TOKEN是否过期等等
+ * @author TianwYam
+ * @date 2021年5月19日下午5:51:22
+ * @param token
+ * @return 过期 则抛出异常
+ */
+public static TokenReqBean checkToken(String token) {
+	Algorithm algorithm = Algorithm.HMAC256(secret);
+	JWTVerifier verifier = JWT.require(algorithm).build();
+	String subject = verifier.verify(token).getSubject();
+	return JSON.parseObject(decode(subject), TokenReqBean.class);
+}
+
+~~~
+
+
+
+
+
+
+
 ## spring-boot-learn-freemarker
 
 
