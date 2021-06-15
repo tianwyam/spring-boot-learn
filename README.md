@@ -21,6 +21,7 @@
   - [spring-boot-learn-jwt](#spring-boot-learn-jwt)
 
     - [JWT简单使用](#JWT简单使用)
+    - [使用Assembly打包](#使用Assembly打包)
 
   - [spring-boot-learn-freemarker](#spring-boot-learn-freemarker)
 
@@ -43,7 +44,9 @@
       - [获取屏幕截屏](#获取屏幕截屏)
       - [服务端推送](#服务端推送)
 
-  
+  - [spring-boot-learn-websocket 实现聊天-即时通讯](#spring-boot-learn-websocket)
+
+  - [spring-boot-learn-mybatis 简单使用](#spring-boot-learn-mybatis)
 
   
 
@@ -143,6 +146,208 @@ public static TokenReqBean checkToken(String token) {
 }
 
 ~~~
+
+
+
+
+
+<br/>
+
+
+
+### 使用Assembly打包
+
+
+
+
+
+pom.xml
+
+~~~xml
+
+<!-- 打包 -->
+<build>
+
+	<!-- 定义资源 -->
+	<resources>
+
+		<resource>
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.*</include>
+			</includes>
+		</resource>
+
+		<resource>
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>*.*</include>
+			</includes>
+			<!-- 把配置文件中的引用值转为实际值 ${}转成实际值 -->
+			<filtering>true</filtering>
+		</resource>
+
+	</resources>
+
+	<!-- 插件 -->
+	<plugins>
+
+		<!-- 1、打jar包 插件 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+				<!-- 排除配置文件，不打到jar包内 -->
+				<excludes>
+					<exclude>*.properties</exclude>
+					<exclude>*.yml</exclude>
+					<exclude>release-note</exclude>
+				</excludes>
+
+				<archive>
+					<!-- 配置jar包中MANIFEST的配置 -->
+					<manifest>
+						<!-- 指定JAR中的classpath -->
+						<!-- 也可以不指定，由启动脚本指定 -->
+						<addClasspath>true</addClasspath>
+						<!-- MANIFEST.MF中 class-path 加入前缀 -->
+						<classpathPrefix>lib/</classpathPrefix>
+						<!-- jar不包含唯一版本标识 -->
+						<useUniqueVersions>false</useUniqueVersions>
+						<!-- 指定入口主类 -->
+						<mainClass>com.tianya.springboot.jwt.LearnJwtApplication</mainClass>
+					</manifest>
+
+					<!-- MANIFEST.MF中 class-path 加入当前资源文件目录 -->
+					<manifestEntries>
+						<Class-Path>./</Class-Path>
+					</manifestEntries>
+				</archive>
+
+				<!-- 打的jar包最后输出的目录 -->
+				<outputDirectory>${project.build.directory}</outputDirectory>
+
+			</configuration>
+		</plugin>
+
+		<!-- 2、拷贝maven依赖的jar -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-dependency-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>copy-dependencies</id>
+					<phase>package</phase>
+					<goals>
+						<goal>copy-dependencies</goal>
+					</goals>
+					<configuration>
+						<!-- 拷贝maven依赖的jar 的位置 -->
+						<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						<excludeTransitive>false</excludeTransitive>
+						<stripVersion>false</stripVersion>
+						<includeScope>runtime</includeScope>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+
+		<!-- 3、assembly插件 用来整体打包(包含配置文件、主jar、maven依赖的jar、脚本文件等) -->
+		<!-- assembly可以整体打成一个 zip tar.gz等安装包 -->
+		<plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<configuration>
+				<descriptors>
+					<!-- 打包的具体描述文件 -->
+					<descriptor>assembly.xml</descriptor>
+				</descriptors>
+			</configuration>
+			<executions>
+				<execution>
+					<id>make-assembly</id>
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+					<configuration>
+						<appendAssemblyId>false</appendAssemblyId>
+						<!-- 最终打的整体包的名称 -->
+						<finalName>${project.artifactId}-install-${project.version}-${maven.build.timestamp}</finalName>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+
+	</plugins>
+
+</build>
+~~~
+
+
+
+
+
+assembly.xml
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+
+	<!-- 可自定义，这里指项目环境 -->
+	<id>allsystem</id>
+	
+	<!-- 打包类型，可以设置多个，最后输出的也是多个包 -->
+	<formats>
+		<format>tar.gz</format>
+		<format>zip</format>
+	</formats>
+	
+	<!-- 打包包含根目录 -->
+	<includeBaseDirectory>true</includeBaseDirectory>
+	
+	<fileSets>
+		
+		<!-- 复制配置文件到 打包目录中 -->
+		<fileSet>
+			<!-- 源资源目录 -->
+			<directory>${basedir}/target/classes</directory>
+			<!-- 输出到打包的目录 -->
+			<outputDirectory>./</outputDirectory>
+			<!-- 设置文件权限 -->
+			<fileMode>0777</fileMode>
+			<!-- 包括 -->
+			<includes>
+				<include>*.properties</include>
+				<include>*.yml</include>
+				<include>*.sh</include>
+			</includes>
+		</fileSet>
+		
+		
+		<!-- 复制第三方依赖包 到 打包目录lib中 -->
+		<fileSet>
+			<directory>${basedir}/target/lib</directory>
+			<outputDirectory>lib</outputDirectory>
+			<fileMode>0777</fileMode>
+		</fileSet>
+		
+		
+		<!-- 复制项目JAR包 到 打包目录中 -->
+		<fileSet>
+			<directory>${basedir}/target</directory>
+			<outputDirectory>./</outputDirectory>
+			<fileMode>0777</fileMode>
+			<includes>
+				<include>${project.build.finalName}.jar</include>
+			</includes>
+		</fileSet>
+		
+	</fileSets>
+
+</assembly>
+~~~
+
+
 
 
 
