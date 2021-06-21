@@ -49,5 +49,6 @@
 		<module>spring-boot-learn-freemarker</module>
 		<module>spring-boot-learn-jwt</module>
 		<module>spring-boot-learn-mybatis-plus</module>
+		<module>spring-boot-learn-javafx</module>
 	</modules>
 </project>
