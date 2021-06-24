@@ -93,17 +93,17 @@ public class MainStageController implements Initializable {
 				"properties","lastUpdated","repositories"
 		};
 		
-		mavenUploadProcess.appendText("##################");
-		mavenUploadProcess.appendText("开始删除临时文件.....");
+		mavenUploadProcess.appendText("\n##################\n");
+		mavenUploadProcess.appendText("\n开始删除临时文件.....\n");
 		Collection<File> listFiles = FileUtils.listFiles(new File(localRepAddr), extensions, true);
 		for (File file : listFiles) {
 			FileUtils.deleteQuietly(file);
-			mavenUploadProcess.appendText("删除临时文件: " + file.getAbsolutePath());
+			mavenUploadProcess.appendText("\n删除临时文件: " + file.getAbsolutePath());
 		}
 		
-		mavenUploadProcess.appendText("删除临时文件完成.....");
-		mavenUploadProcess.appendText("删除文件总数: " + listFiles.size());
-		mavenUploadProcess.appendText("####################");
+		mavenUploadProcess.appendText("\n删除临时文件完成.....\n");
+		mavenUploadProcess.appendText("\n删除文件总数: " + listFiles.size());
+		mavenUploadProcess.appendText("\n####################\n");
 	}
 	
 	

@@ -12,12 +12,18 @@ import javafx.stage.Stage;
 public class LearnJavaFXApplication extends AbstractJavaFxApplicationSupport {
 
 	public static void main(String[] args) {
-		launch(LearnJavaFXApplication.class, MainStageView.class, new CustomScreen(), args);
+		launch(LearnJavaFXApplication.class, 
+				MainStageView.class, 
+				new CustomScreen(), 
+				args);
 	}
 	
 	
     @Override
     public void start(Stage stage) throws Exception {
         super.start(stage);
+        
+        // 设置窗口无法改动
+        stage.setResizable(false);
     }
 }
