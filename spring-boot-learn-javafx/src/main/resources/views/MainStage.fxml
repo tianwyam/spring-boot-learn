@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -15,6 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane id="mainBorderPane" 
+minWidth="870.0" 
 stylesheets="/css/MainStage.css" 
 xmlns="http://javafx.com/javafx/8" 
 xmlns:fx="http://javafx.com/fxml/1" 
@@ -22,7 +24,7 @@ fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
 
 	
    <top>
-      <MenuBar prefHeight="29.0" prefWidth="870.0" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="29.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="MAVEN本地JAR仓库上传远程私服仓库" />
         </menus>
@@ -32,7 +34,7 @@ fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
 
 
    <center>
-      <Pane prefHeight="705.0" prefWidth="870.0" BorderPane.alignment="CENTER">
+      <Pane id="pane" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="89.0" layoutY="57.0" prefHeight="29.0" prefWidth="124.0" text="Maven安装路径：" />
             <TextField fx:id="mavenHome" layoutX="252.0" layoutY="52.0" prefHeight="38.0" prefWidth="559.0" />
@@ -43,7 +45,7 @@ fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
             <Label layoutX="90.0" layoutY="228.0" prefHeight="29.0" prefWidth="128.0" text="Maven私服仓库密码：" />
             <TextField fx:id="mavenRemoteRepoPassword" layoutX="251.0" layoutY="226.0" prefHeight="33.0" prefWidth="560.0" />
             <Label layoutX="90.0" layoutY="289.0" prefHeight="29.0" prefWidth="128.0" text="Maven本地仓库地址：" />
-            <TextArea fx:id="mavenUploadProcess" layoutX="90.0" layoutY="388.0" prefHeight="284.0" prefWidth="734.0" />
+            <TextArea fx:id="mavenUploadProcess" editable="false" layoutX="90.0" layoutY="388.0" prefHeight="284.0" prefWidth="734.0" scrollLeft="20.0" scrollTop="20.0" />
             <Label layoutX="90.0" layoutY="359.0" prefHeight="29.0" prefWidth="212.0" text="Maven本地仓库上传过程：" />
             <ProgressBar layoutX="244.0" layoutY="365.0" prefWidth="200.0" progress="0.0" />
             <Button layoutX="480.0" layoutY="362.0" mnemonicParsing="false" onAction="#uploadJar2Remote" prefHeight="23.0" prefWidth="84.0" text="上传" />
