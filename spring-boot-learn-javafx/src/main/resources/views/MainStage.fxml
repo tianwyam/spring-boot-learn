@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane id="mainBorderPane" 
-minWidth="870.0" 
-stylesheets="/css/MainStage.css" 
-xmlns="http://javafx.com/javafx/8" 
-xmlns:fx="http://javafx.com/fxml/1" 
-fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
+	minWidth="870.0" 
+	stylesheets="/css/MainStage.css" 
+	xmlns="http://javafx.com/javafx/8" 
+	xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
 
 	
    <top>
@@ -36,11 +36,11 @@ fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
    <center>
       <Pane id="pane" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="89.0" layoutY="57.0" prefHeight="29.0" prefWidth="124.0" text="Maven安装路径：" />
-            <TextField fx:id="mavenHome" layoutX="252.0" layoutY="52.0" prefHeight="38.0" prefWidth="559.0" />
+            <Label layoutX="90.0" layoutY="13.0" prefHeight="29.0" prefWidth="124.0" text="Maven安装路径：" />
+            <TextField fx:id="mavenHome" layoutX="251.0" layoutY="9.0" prefHeight="33.0" prefWidth="559.0" />
             <Label layoutX="90.0" layoutY="112.0" prefHeight="29.0" prefWidth="135.0" text="Maven私服仓库地址：" />
-            <TextField fx:id="mavenRemoteRepoAddr" layoutX="251.0" layoutY="109.0" prefHeight="36.0" prefWidth="560.0" />
-            <TextField fx:id="mavenRemoteRepoUser" layoutX="251.0" layoutY="168.0" prefHeight="34.0" prefWidth="560.0" />
+            <TextField fx:id="mavenRemoteRepoAddr" layoutX="251.0" layoutY="109.0" prefHeight="33.0" prefWidth="560.0" />
+            <TextField fx:id="mavenRemoteRepoUser" layoutX="251.0" layoutY="168.0" prefHeight="33.0" prefWidth="560.0" />
             <Label layoutX="90.0" layoutY="170.0" prefHeight="29.0" prefWidth="128.0" text="Maven私服仓库用户：" />
             <Label layoutX="90.0" layoutY="228.0" prefHeight="29.0" prefWidth="128.0" text="Maven私服仓库密码：" />
             <TextField fx:id="mavenRemoteRepoPassword" layoutX="251.0" layoutY="226.0" prefHeight="33.0" prefWidth="560.0" />
@@ -50,6 +50,8 @@ fx:controller="com.tianya.springboot.javafx.controller.MainStageController">
             <ProgressBar layoutX="244.0" layoutY="365.0" prefWidth="200.0" progress="0.0" />
             <Button layoutX="480.0" layoutY="362.0" mnemonicParsing="false" onAction="#uploadJar2Remote" prefHeight="23.0" prefWidth="84.0" text="上传" />
             <TextField fx:id="mavenLocalRepoAddr" layoutX="251.0" layoutY="287.0" prefHeight="33.0" prefWidth="560.0" />
+            <Label layoutX="90.0" layoutY="62.0" prefHeight="29.0" prefWidth="124.0" text="Maven私服仓库ID：" />
+            <TextField fx:id="mavenRepoId" layoutX="251.0" layoutY="58.0" prefHeight="33.0" prefWidth="559.0" />
          </children>
       </Pane>
    </center>
