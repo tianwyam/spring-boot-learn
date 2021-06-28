@@ -22,31 +22,26 @@
 
     - [JWT简单使用](#JWT简单使用)
     - [使用Assembly打包](#使用Assembly打包)
-
   - [spring-boot-learn-freemarker](#spring-boot-learn-freemarker)
 
     - [freemarker实现转word](#freemarker实现转word)
-
   - [spring-boot-learn-jsp](#spring-boot-learn-jsp)
 
     - [集成JSP](#集成JSP)
-
   - [spring-boot-learn-word](#spring-boot-learn-word)
 
     - [给PDF文件添加文本水印](#给PDF文件添加文本水印)
-
   - [spring-boot-learn-feign](#spring-boot-learn-feign)
 
     - [在springboot环境下](#在springboot环境下)
     - [不在spring环境下](#不在spring环境下)
-
   - [spring-boot-learn-capture-screen](#spring-boot-learn-capture-screen)
       - [获取屏幕截屏](#获取屏幕截屏)
       - [服务端推送](#服务端推送)
-
   - [spring-boot-learn-websocket 实现聊天-即时通讯](#spring-boot-learn-websocket)
-
   - [spring-boot-learn-mybatis 简单使用](#spring-boot-learn-mybatis)
+  - [spring-boot-learn-javafx 使用JavaFX制作一个GUI客户端](#spring-boot-learn-javafx)
+      - [上传本地JAR到私服仓库](#上传本地JAR到私服仓库)
 
   
 
@@ -1643,6 +1638,61 @@ public class FeignClientUtils {
 
 
 
+
+
+
+## spring-boot-learn-javafx
+
+
+
+使用JavaFX集成spring boot简单编写了一个GUI客户端，实现上传本地JAR到私服仓库
+
+
+
+maven pom.xml
+
+~~~xml
+<!-- spring boot 集成 JavaFX -->
+<dependency>
+    <groupId>de.roskenet</groupId>
+    <artifactId>springboot-javafx-support</artifactId>
+    <version>2.1.6</version>
+</dependency>
+
+
+<!-- spring boot 集成 JavaFX 的 插件 -->
+<plugin>
+    <groupId>com.zenjava</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <configuration>
+        <mainClass>com.tianya.springboot.javafx.LearnJavaFXApplication</mainClass>
+        <vendor>tianwyam</vendor>
+    </configuration>
+</plugin>
+~~~
+
+
+
+
+
+### 上传本地JAR到私服仓库
+
+
+
+主要命令：
+
+~~~powershell
+ cmd /c mvn -s maven本地的/config/setting.xml deploy:deploy-file -Durl=私服仓库地址  -DrepositoryId=私服仓库ID -DgeneratePom=false  -Dpackaging=jar -Dfile=jar包文件地址  -Dsources=源jar包地址  -Djavadoc=doc包地址
+~~~
+
+
+
+使用 Java调用本地命令
+
+~~~java
+Runtime CMD = Runtime.getRuntime();
+Process proc = CMD.exec(命令);
+~~~
 
 
 
