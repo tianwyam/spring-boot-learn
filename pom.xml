@@ -54,5 +54,6 @@
 		<module>spring-boot-learn-mybatis-plus</module>
 		<module>spring-boot-learn-javafx</module>
 		<module>spring-boot-learn-redis</module>
+		<module>spring-boot-learn-mockito</module>
 	</modules>
 </project>
