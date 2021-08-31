@@ -42,6 +42,7 @@
   - [spring-boot-learn-mybatis 简单使用](#spring-boot-learn-mybatis)
   - [spring-boot-learn-javafx 使用JavaFX制作一个GUI客户端](#spring-boot-learn-javafx)
       - [上传本地JAR到私服仓库](#上传本地JAR到私服仓库)
+  - [spring-boot-learn-mockito 单元测试](#spring-boot-learn-mockito)
 
   
 
@@ -1693,6 +1694,82 @@ maven pom.xml
 Runtime CMD = Runtime.getRuntime();
 Process proc = CMD.exec(命令);
 ~~~
+
+
+
+
+
+
+
+## spring-boot-learn-mockito
+
+
+
+单元测试
+
+
+
+### springboot 集成的 test 进行单元测试
+
+
+
+第一步：maven配置引入依赖
+
+~~~xml
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+</dependency>
+
+~~~
+
+
+
+第二步：编写测试用例
+
+~~~java
+package com.tianya.springboot.learntest.test.service;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.alibaba.fastjson.JSON;
+import com.tianya.springboot.learntest.entity.UserBean;
+import com.tianya.springboot.learntest.service.UserService;
+
+/**
+ * @description
+ *	第一种方式：spring boot 测试方式
+ *	它可以模拟springboot启动整个容器
+ * @author TianwYam
+ * @date 2021年8月22日下午6:19:44
+ */
+@SpringBootTest
+public class UserServiceTest {
+	
+	@Autowired
+	private UserService userService;
+	
+	
+	@Test
+	public void testGetAll() {
+		
+		List<UserBean> users = userService.getUsers();
+		
+		System.out.println(JSON.toJSONString(users, true));
+		
+	}
+
+}
+~~~
+
+
+
+这种方式需要启动整个项目spring容器运行
 
 
 
