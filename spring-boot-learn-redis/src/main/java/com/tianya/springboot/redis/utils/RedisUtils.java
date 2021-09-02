@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.tianya.springboot.redis.entity.StudentBean;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Tuple;
 
 public class RedisUtils {
 	
@@ -94,20 +95,35 @@ public class RedisUtils {
 		// 成绩添加到 redis缓存中
 		List<StudentBean> students = initData();
 		System.out.println("按照成绩排序前的学生：");
-		System.out.println(JSON.toJSONString(students));
+		for (StudentBean studentBean : students) {
+			System.out.println("\t" + JSON.toJSONString(studentBean));
+		}
+		
+		// 使用 zset 存放学生成绩
 		for (StudentBean stu : students) {
 			jedis.zadd(KEY_ZSET_RANK_STUD, stu.getScore(), stu.getName());
 		}
 		
-		// 成绩排序
+		// zrange 成绩排序
 		Set<String> zrange = jedis.zrange(KEY_ZSET_RANK_STUD, 0, -1);
 		System.out.println("\n按照成绩排序后的学生：");
-		System.out.println(JSON.toJSONString(zrange));
+		for (String name : zrange) {
+			System.out.println("\t " + name);
+		}
 		
-		// 逆序输出  -1 代表输出所有的
+		// zrevrange 逆序输出  -1 代表输出所有的
 		Set<String> zrevrange = jedis.zrevrange(KEY_ZSET_RANK_STUD, 0, -1);
-		System.out.println("\n按照成绩逆序排序后的学生：");
-		System.out.println(JSON.toJSONString(zrevrange));
+		System.out.println("按照成绩逆序排序后的学生：");
+		for (String name : zrevrange) {
+			System.out.println("\t " + name);
+		}
+		
+		// 带分数输出
+		Set<Tuple> zrangeWithScores = jedis.zrangeWithScores(KEY_ZSET_RANK_STUD, 0, -1);
+		System.out.println("按照成绩排序后的学生(带分数输出)：");
+		for (Tuple tuple : zrangeWithScores) {
+			System.out.println("\t " + tuple.getElement() + " " + tuple.getScore());
+		}
 		
 	}
 	
