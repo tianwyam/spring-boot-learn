@@ -8,11 +8,17 @@
 	
     <!---Mybatis上下文-->
     <context id="MySql" targetRuntime="MyBatis3">
+    
+                   
+        <!-- 自定义生成类的注解类 -->
+        <commentGenerator type="com.tianya.springboot.mybatis.tool.comment.MyCommentGenerator"> </commentGenerator>
+        
         <!--配置数据库的链接信息-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;serverTimezone=UTC" 
                         userId="root"
                         password="mysql"/>
+         
         <!--数据库BigDecimals字段在java中定义-->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -35,7 +41,14 @@
         </javaClientGenerator>
         
         <!--要生成的表结构-->
-        <table tableName="users" domainObjectName="UserBean"
+        <table tableName="user" domainObjectName="UserBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        
+        <!--要生成的表结构-->
+        <table tableName="dept" domainObjectName="DeptBean"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

@@ -22,6 +22,7 @@ public class MybatisGenerateMain {
 	 */
 	public static void main(String[] args) {
 		
+		System.out.println("开始生成.....");
 		List<String> warnings = new ArrayList<>();
 		try (
 				InputStream inputStream = MybatisGenerateMain.class
@@ -32,6 +33,7 @@ public class MybatisGenerateMain {
 			DefaultShellCallback defaultShellCallback = new DefaultShellCallback(true);
 			MyBatisGenerator generator = new MyBatisGenerator(config, defaultShellCallback, warnings);
 			generator.generate(null);
+			System.out.println("生成完成");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
