@@ -6,7 +6,15 @@
 <mapper namespace="com.tianya.springboot.mybatis.mapper.IUserMapper">
     
     <select id="getUserList" resultType="UserBean">
-        select * from users
+        select * from user
     </select>
+    
+    
+    <select id="getUserTableColumns" resultType="map">
+        SELECT * FROM information_schema.COLUMNS t WHERE  t.TABLE_SCHEMA = 'test' AND t.TABLE_NAME = 'user'
+    </select>
+    
+    
+    
 </mapper>
 
