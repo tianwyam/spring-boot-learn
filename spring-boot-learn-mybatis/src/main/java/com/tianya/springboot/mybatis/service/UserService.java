@@ -29,11 +29,27 @@ public class UserService {
 		return userMapper.getUserList();
 	}
 	
+	/**
+	 * @description
+	 *	获取 元 数据
+	 * @author TianwYam
+	 * @date 2021年10月6日上午9:05:47
+	 * @return
+	 */
 	public List<Map<String, Object>> getUserTableColumns(){
-		return userMapper.getUserTableColumns();
+		List<Map<String, Object>> userTableColumns = userMapper.getUserTableColumns();
+		System.out.println(JSON.toJSONString(userTableColumns, true));
+		return userTableColumns;
 	}
 	
 	
+	/**
+	 * @description
+	 *	获取 user 表的 元数据 表结构
+	 * @author TianwYam
+	 * @date 2021年10月6日上午9:05:14
+	 * @return
+	 */
 	public List<TableColumnBean> getUserMeta() {
 		
 		List<TableColumnBean> columnList = new ArrayList<>();
