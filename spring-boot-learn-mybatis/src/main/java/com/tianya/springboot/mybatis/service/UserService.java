@@ -55,7 +55,11 @@ public class UserService {
 		List<TableColumnBean> columnList = new ArrayList<>();
 		try {
 			
-			DatabaseMetaData metaData = sqlSessionFactory.openSession().getConnection().getMetaData();
+			// 获取 metadata
+			DatabaseMetaData metaData = sqlSessionFactory.openSession()
+					.getConnection()
+					.getMetaData();
+			// 获取表字段
 			ResultSet columns = metaData.getColumns("test", null, "user", null);
 			
 			System.out.println("column: ");
