@@ -1,0 +1,29 @@
+
+server:  port: 8080
+  servlet:    context-path: /
+    
+
+
+spring:  shardingsphere:    datasource:
+      # 配置数据库名称      names: db1
+      # 配置具体数据库连接信息
+      db1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+        username: root
+        password: mysql
+    sharding:      tables:
+        t_order:
+          key-generator:
+            column: order_id
+            type: SNOWFLAKE
+            
+          actual-data-nodes: t_order_$->{1..2}
+          table-strategy:
+            inline:
+              sharding-column: order_id
+              algorithm-expression: t_order_$->{order_id % 2}        
+        
+      
+        

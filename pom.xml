@@ -55,5 +55,6 @@
 		<module>spring-boot-learn-javafx</module>
 		<module>spring-boot-learn-redis</module>
 		<module>spring-boot-learn-mockito</module>
+		<module>spring-boot-learn-sharding-jdbc</module>
 	</modules>
 </project>
