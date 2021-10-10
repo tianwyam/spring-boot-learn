@@ -47,7 +47,13 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<dependency>
 		    <groupId>org.apache.shardingsphere</groupId>
 		    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-		    <version>4.1.1</version>
+		    <version>4.0.0-RC1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.shardingsphere</groupId>
+		    <artifactId>sharding-jdbc-spring-namespace</artifactId>
+		    <version>4.0.0-RC1</version>
 		</dependency>
 
 
