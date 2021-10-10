@@ -7,5 +7,6 @@ import com.tianya.springboot.shardingjdbc.entity.Order;
 
 @Repository
 public interface IOrderMapper extends BaseMapper<Order>{
+	
 
 }
