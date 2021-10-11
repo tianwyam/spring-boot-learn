@@ -6,13 +6,18 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>spring-boot-learn-sharding-jdbc</artifactId>
+	
+	<properties>
+		<sharding-jdbc-version>4.1.1</sharding-jdbc-version>
+		<!-- <sharding-jdbc-version>4.0.0-RC1</sharding-jdbc-version> -->
+	</properties>
 
 	<parent>
 		<groupId>com.tianya.springboot</groupId>
 		<artifactId>spring-boot-learn</artifactId>
 		<version>1.0.0</version>
 	</parent>
-
+	
 
 	<dependencies>
 
@@ -47,13 +52,13 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<dependency>
 		    <groupId>org.apache.shardingsphere</groupId>
 		    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-		    <version>4.0.0-RC1</version>
+		    <version>${sharding-jdbc-version}</version>
 		</dependency>
 		
 		<dependency>
 		    <groupId>org.apache.shardingsphere</groupId>
 		    <artifactId>sharding-jdbc-spring-namespace</artifactId>
-		    <version>4.0.0-RC1</version>
+		    <version>${sharding-jdbc-version}</version>
 		</dependency>
 
 
