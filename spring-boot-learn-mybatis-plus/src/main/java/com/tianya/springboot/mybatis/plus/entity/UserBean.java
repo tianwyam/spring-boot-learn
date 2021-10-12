@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@TableName("users")
+@Builder
+@TableName("user")
 public class UserBean {
 	
 	@TableId(type = IdType.AUTO, value = "id")

@@ -60,6 +60,14 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<artifactId>fastjson</artifactId>
 			<version>1.2.73</version>
 		</dependency>
+				
+		<!-- 生成测试数据工具 -->
+		<dependency>
+		    <groupId>com.github.javafaker</groupId>
+		    <artifactId>javafaker</artifactId>
+		    <version>1.0.2</version>
+		</dependency>
+		
 
 
 	</dependencies>
