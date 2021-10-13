@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.javafaker.Faker;
 import com.tianya.springboot.mybatis.plus.entity.UserBean;
 import com.tianya.springboot.mybatis.plus.mapper.IUserMapper;
@@ -79,6 +80,24 @@ public class UserTest {
 	
 	
 	
+	/**
+	 * @description
+	 *	条件查询
+	 * @author TianwYam
+	 * @date 2021年10月13日下午4:07:05
+	 */
+	@Test
+	public void getUserQueryList() {
+		
+		// 条件查询 QueryWrapper 方式
+		QueryWrapper<UserBean> queryWrapper = new QueryWrapper<>();
+		queryWrapper.between("id", 25, 30);
+		queryWrapper.eq("isadmin", true);
+		List<UserBean> queryList = userMapper.selectList(queryWrapper);
+		
+		System.out.println(JSON.toJSONString(queryList, true));
+		
+	}
 	
 	
 

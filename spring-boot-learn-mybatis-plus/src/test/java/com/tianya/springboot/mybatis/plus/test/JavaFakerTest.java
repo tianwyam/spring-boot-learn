@@ -18,6 +18,12 @@ public class JavaFakerTest {
 		System.out.println(faker.name().username());
 		System.out.println(faker.name().fullName());
 		
+		System.out.println(faker.idNumber().invalid());
+		System.out.println(faker.idNumber().invalidSvSeSsn());
+		System.out.println(faker.idNumber().ssnValid());
+		System.out.println(faker.idNumber().valid());
+		System.out.println(new Faker().idNumber().validSvSeSsn());
+		
 	}
 
 }
