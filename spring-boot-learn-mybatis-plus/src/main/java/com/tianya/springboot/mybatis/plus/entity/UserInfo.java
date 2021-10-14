@@ -3,6 +3,7 @@ package com.tianya.springboot.mybatis.plus.entity;
 import java.util.Date;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,6 +28,7 @@ public class UserInfo {
 	private Long userId ;
 	
 	// 用户姓名
+	@TableField
 	private String userName ;
 	
 	// 用户身份证

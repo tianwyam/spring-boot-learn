@@ -127,8 +127,9 @@ public class UserInfoMapperTest {
 				.between(UserInfo::getHeight, 100, 200);
 		
 		Page<UserInfo> page = new Page<UserInfo>(1, 3);
-		page.setSearchCount(false);
+		page.setSearchCount(true);
 		
+		// 若是没有配置 分页插件，则 selectPage 分页API 不生效
 		page = userInfoMapper.selectPage(page, queryWrapper);
 		
 		System.out.println("分页查询：");

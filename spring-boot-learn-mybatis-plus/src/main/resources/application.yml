@@ -10,3 +10,5 @@ spring:  datasource:    url: jdbc:mysql://localhost:3306/test?useUnicode=true&
 mybatis-plus:  type-aliases-package: com.tianya.springboot.mybatis.plus.entity
   config-location: classpath:mybatis/mybatis.xml
   
+  
+logging:  level:    root: debug
