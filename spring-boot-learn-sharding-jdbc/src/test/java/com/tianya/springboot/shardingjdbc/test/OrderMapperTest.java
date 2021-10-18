@@ -2,6 +2,7 @@ package com.tianya.springboot.shardingjdbc.test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.javafaker.Faker;
 import com.tianya.springboot.shardingjdbc.entity.Order;
 import com.tianya.springboot.shardingjdbc.mapper.IOrderMapper;
 
@@ -37,16 +39,18 @@ public class OrderMapperTest {
 	@Test
 	public void insertOrder() {
 		
+		Faker faker = new Faker(Locale.SIMPLIFIED_CHINESE);
+		
 		long currentTimeMillis = System.currentTimeMillis();
 		Random random = new Random();
 		for (int i = 1; i <= 10; i++) {
 			
-			int nextInt = random.nextInt(5000000);
+			int nextInt = random.nextInt(500000000);
 			Order order = Order.builder()
-					.orderName("手机订单")
+					.orderName("订单应用类型：" + faker.app().name())
 					.orderType("网购订单")
-					.orderDesc("买了一款手机 红米+" + i)
-					.createUserName("张三 + " + i)
+					.orderDesc("买了款应用：" + faker.app().name() + " 的VIP会员")
+					.createUserName(faker.name().fullName())
 					.createUserId(i)
 					.createTime(new Date(currentTimeMillis + nextInt))
 					.build();

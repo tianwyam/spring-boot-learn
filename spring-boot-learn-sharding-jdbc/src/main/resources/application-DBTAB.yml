@@ -6,8 +6,10 @@
 spring:
   shardingsphere:
     datasource:
+    
       # 配置数据库名称
-      names: db1
+      names: db1,db2
+      
       # 配置具体数据库连接信息
       db1:
         type: com.alibaba.druid.pool.DruidDataSource
@@ -15,23 +17,43 @@ spring:
         url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
         username: root
         password: mysql
+      db2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+        username: root
+        password: mysql
     sharding:
       tables:
+        
+        # 配置多个逻辑表
         t_order:
+        
+          # 配置 主键 列、及类型
           keyGenerator:
             column: order_id
             type: SNOWFLAKE
             
-          actualDataNodes: db1.t_order_$->{1..2}
+          # 配置 数据库 表规则
+          actualDataNodes: db$->{1..2}.t_order_$->{1..2}
+          
+          # 分库策略
+          databaseStrategy:
+            standard:
+              shardingColumn: create_user_id
+              
+          # 分表策略
           tableStrategy:
             inline:
               sharding-column: order_id
               algorithm-expression: t_order_$->{order_id % 2 + 1}
         
+    # 配置 是否打印SQL 
     props:
       sql.show: true
       
 
+  # 解决多个bean映射到同一个表
   main:
     allow-bean-definition-overriding: true
    
