@@ -37,7 +37,7 @@ spring:
           # 配置 数据库 表规则
           actualDataNodes: db$->{1..2}.t_order_$->{1..2}
           
-          # 分库策略
+          # 分库策略（具体某张表的）
           databaseStrategy:
             inline:
               shardingColumn: create_user_id
@@ -48,7 +48,13 @@ spring:
             inline:
               sharding-column: order_id
               algorithm-expression: t_order_$->{order_id % 2 + 1}
-        
+              
+      # 默认的 分库策略（针对所有表）
+      defaultDatabaseStrategy:
+        inline:
+          shardingColumn: create_user_id
+          algorithmExpression: db$->{create_user_id % 2 + 1}
+      
     # 配置 是否打印SQL 
     props:
       sql.show: true
