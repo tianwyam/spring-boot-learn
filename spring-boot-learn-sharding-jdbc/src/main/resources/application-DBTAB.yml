@@ -60,7 +60,7 @@ spring:
       sql.show: true
       
 
-  # 解决多个bean映射到同一个表
+  # 解决一个bean映射到多张表问题
   main:
     allow-bean-definition-overriding: true
    
