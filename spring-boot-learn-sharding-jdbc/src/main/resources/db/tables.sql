@@ -26,7 +26,14 @@ CREATE TABLE `t_order_2` (
 
 
 
-
+-- 公共字典表
+CREATE TABLE `t_type_dict` (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `dict_type` varchar(50) NOT NULL COMMENT '字典类型',
+  `dict_desc` varchar(100) DEFAULT NULL COMMENT '字典描述',
+  `dict_order` tinyint(10) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 
 

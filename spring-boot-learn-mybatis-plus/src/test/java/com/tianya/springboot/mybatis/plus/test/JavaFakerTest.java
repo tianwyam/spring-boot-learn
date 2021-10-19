@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.javafaker.Book;
 import com.github.javafaker.Faker;
 
 public class JavaFakerTest {
@@ -23,6 +24,14 @@ public class JavaFakerTest {
 		System.out.println(faker.idNumber().ssnValid());
 		System.out.println(faker.idNumber().valid());
 		System.out.println(new Faker().idNumber().validSvSeSsn());
+		
+		
+		Book book = faker.book();
+		System.out.println(book.author());
+		System.out.println(book.genre());
+		System.out.println(book.publisher());
+		System.out.println(book.title());
+		
 		
 	}
 

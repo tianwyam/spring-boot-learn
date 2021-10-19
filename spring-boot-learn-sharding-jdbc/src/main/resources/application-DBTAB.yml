@@ -50,10 +50,19 @@ spring:
               algorithm-expression: t_order_$->{order_id % 2 + 1}
               
       # 默认的 分库策略（针对所有表）
-      defaultDatabaseStrategy:
-        inline:
-          shardingColumn: create_user_id
-          algorithmExpression: db$->{create_user_id % 2 + 1}
+      #defaultDatabaseStrategy:
+      #  inline:
+      #    shardingColumn: create_user_id
+      #    algorithmExpression: db$->{create_user_id % 2 + 1}
+      
+      # 广播表（公共配置表 所有数据源库都需要的表）
+      # 新增|删除|更新：每个库都会新增|删除|更新
+      # 查询：查询单库
+      broadcastTables:
+      - t_type_dict
+      
+      # 配置默认数据源
+      defaultDataSourceName: db2
       
     # 配置 是否打印SQL 
     props:

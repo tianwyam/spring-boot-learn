@@ -5,5 +5,5 @@ server:  port: 8080
 # 不同配置-不同环境
 # TAB 单库分表 配置
 # DBTAB 分库分表 配置
-spring:  profiles:    active:    - DBTAB    
+spring:  profiles:    active:    - DBTAB
         
