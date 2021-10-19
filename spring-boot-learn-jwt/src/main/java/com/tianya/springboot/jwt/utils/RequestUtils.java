@@ -1,10 +1,16 @@
 package com.tianya.springboot.jwt.utils;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RequestUtils {
 	
 	/**
@@ -44,7 +50,24 @@ public class RequestUtils {
 	}
 	
 	
-	
+	/**
+	 * @description
+	 *	获取 请求体内 流
+	 * @author TianwYam
+	 * @date 2021年10月19日上午11:56:52
+	 * @param request
+	 * @return
+	 */
+	public static byte[] getBodyStream(HttpServletRequest request) {
+		
+		try {
+			return IOUtils.toByteArray(request.getInputStream());
+		} catch (IOException e) {
+			log.error("获取请求体内流数据发生异常", e);
+		}
+		
+		return new byte[0];
+	}
 	
 
 }
