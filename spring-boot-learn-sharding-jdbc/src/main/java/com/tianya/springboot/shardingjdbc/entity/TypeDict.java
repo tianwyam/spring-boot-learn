@@ -1,5 +1,6 @@
 package com.tianya.springboot.shardingjdbc.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Builder;
@@ -17,6 +18,7 @@ import lombok.Data;
 @TableName("t_type_dict")
 public class TypeDict {
 	
+	@TableId
 	private Long id ;
 	
 	private String dictType ;

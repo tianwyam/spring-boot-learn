@@ -62,8 +62,14 @@ public class TypeDictMapperTest {
 	public void update() {
 		
 		
-		dictMapper.selectById(id);
-		dictMapper.updateById(entity);
+		TypeDict dict = dictMapper.selectById(1);
+		if (dict != null) {
+			
+			dict.setDictType("delete");
+			dict.setDictDesc("删除");
+			
+			dictMapper.updateById(dict);
+		}
 		
 	}
 	
