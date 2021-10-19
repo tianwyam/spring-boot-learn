@@ -69,21 +69,23 @@ public class OrderMapperTest {
 	@Test
 	public void getList() {
 		
-		// 查询所有
-		List<Order> list = orderMapper.selectList(null);
+		// 查询所有 | 时间倒序排序
+		List<Order> list = orderMapper.selectList(Wrappers.lambdaQuery(Order.class)
+				.orderByDesc(Order::getCreateTime));
 		System.out.println("查询所有，总共：" + list.size());
 		System.out.println(JSON.toJSONString(list, true));
 		
 		// 条件查询
 		LambdaQueryWrapper<Order> queryWrapper = Wrappers.lambdaQuery(Order.class)
-				.like(Order::getOrderDesc, "红米")
+				.like(Order::getOrderDesc, "va")
 				.orderByDesc(Order::getOrderDesc);
 		List<Order> queryList = orderMapper.selectList(queryWrapper);
-		System.out.println("条件查询[order_desc like 红米]，总共：" + queryList.size());
+		System.out.println("条件查询[order_desc like va]，总共：" + queryList.size());
 		System.out.println(JSON.toJSONString(queryList, true));
 		
 		// 分页查询
 		Page<Order> page = new Page<Order>(1, 3);
+		// 需要配置分页插件才生效
 		Page<Order> pageQuery = orderMapper.selectPage(page, queryWrapper);
 		System.out.println("分页查询，总共：" + pageQuery.getTotal() );
 		System.out.println(JSON.toJSONString(pageQuery, true));

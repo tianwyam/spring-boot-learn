@@ -2,6 +2,7 @@ package com.tianya.springboot.shardingjdbc.entity;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -33,6 +34,7 @@ public class Order {
 	
 	private String createUserName;
 	
+	@JSONField(format = "yyyy年MM月dd日 HH:mm:ss")
 	private Date createTime ;
 
 }
