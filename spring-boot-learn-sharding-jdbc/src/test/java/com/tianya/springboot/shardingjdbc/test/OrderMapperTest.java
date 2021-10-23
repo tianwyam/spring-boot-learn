@@ -47,7 +47,7 @@ public class OrderMapperTest {
 			
 			int nextInt = random.nextInt(500000000);
 			Order order = Order.builder()
-					.orderName("订单应用类型：" + faker.app().name())
+					.orderName("订单应用名称：" + faker.app().name())
 					.orderType("网购订单")
 					.orderDesc("买了款应用：" + faker.app().name() + " 的VIP会员")
 					.createUserName(faker.name().fullName())

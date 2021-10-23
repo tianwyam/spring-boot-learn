@@ -6,32 +6,45 @@
 spring:
   shardingsphere:
     datasource:
-      # 配置数据库名称
+      # 配置数据库名称（可以配置多个库，以逗号隔开）
       names: db1
       # 配置具体数据库连接信息
       db1:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
+        # 配置 数据库 test
         url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
         username: root
         password: mysql
+        
+    # 分片策略
     sharding:
+      # 配置不同表的 分片策略
       tables:
+        # 配置 具体的 逻辑表的 分片策略
         t_order:
+          # t_order 订单表的 主键规则
           keyGenerator:
+            # 主键列
             column: order_id
+            # 主键生成规则 （SNOWFLAKE 雪花算法 生成分布式唯一ID）
             type: SNOWFLAKE
-            
+          
+          # 配置具体数据库物理表的 表达式
           actualDataNodes: db1.t_order_$->{1..2}
+          # 表策略
           tableStrategy:
             inline:
+              # 分片列
               sharding-column: order_id
+              # 分片规则 表达式（映射到具体的物理表 ）
               algorithm-expression: t_order_$->{order_id % 2 + 1}
         
+    # 配置是否打印SQL
     props:
       sql.show: true
       
-
+  # 解决一个bean映射到多张表问题
   main:
     allow-bean-definition-overriding: true
    
