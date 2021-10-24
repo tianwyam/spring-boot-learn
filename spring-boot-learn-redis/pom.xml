@@ -23,14 +23,26 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 
-		<dependency>
+		<!-- java redis 客户端 -->
+		<!-- <dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
+		</dependency> -->
+				
+		<dependency>
+		    <groupId>io.lettuce</groupId>
+		    <artifactId>lettuce-core</artifactId>
 		</dependency>
+		
 		
 		
 		<dependency>
@@ -42,6 +54,13 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.73</version>
+		</dependency>
+		
+		<!-- 生成测试数据工具 -->
+		<dependency>
+		    <groupId>com.github.javafaker</groupId>
+		    <artifactId>javafaker</artifactId>
+		    <version>1.0.2</version>
 		</dependency>
 		
 
