@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.alibaba.fastjson.JSON;
@@ -64,7 +65,8 @@ public class RedisTest {
 	public void listPop() {
 		
 
-		List<String> rangeGoods = stringRedisTemplate.opsForList().range(LIST_GOODS, 0, -1);
+		ListOperations<String, String> opsForList = stringRedisTemplate.opsForList();
+		List<String> rangeGoods = opsForList.range(LIST_GOODS, 0, -1);
 		if (rangeGoods == null || rangeGoods.size() == 0) {
 			System.out.println("没有秒杀商品了 或者 秒杀活动已结束");
 			return ;
@@ -93,7 +95,7 @@ public class RedisTest {
 //				}
 				
 				
-				String goods = stringRedisTemplate.opsForList().leftPop(LIST_GOODS);
+				String goods = opsForList.leftPop(LIST_GOODS);
 				if (StringUtils.isNotBlank(goods)) {
 					System.out.println(person + " 抢到了 秒杀商品：" + goods);
 				} else {

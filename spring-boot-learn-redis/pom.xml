@@ -33,15 +33,15 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 
 		<!-- java redis 客户端 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-		</dependency> -->
+		</dependency>
 				
-		<dependency>
+		<!-- <dependency>
 		    <groupId>io.lettuce</groupId>
 		    <artifactId>lettuce-core</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		
 		
