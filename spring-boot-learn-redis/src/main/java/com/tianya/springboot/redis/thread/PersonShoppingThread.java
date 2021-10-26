@@ -35,6 +35,14 @@ public class PersonShoppingThread  implements Runnable{
 	@Override
 	public void run() {
 		
+		// 模拟 用户抢购 耗时
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		// 获取 秒杀商品队列 数量
 		Long len = jedis.llen(LIST_GOODS);
 		if (len == null || len <= 0) {
 			System.out.println(String.format(" %d : %s 商品已经卖完了，没有抢到了秒杀商品", index, name));
@@ -49,6 +57,8 @@ public class PersonShoppingThread  implements Runnable{
 			System.out.println(String.format(" %d : %s 没有抢到秒杀商品", index, name));
 		}
 		
+		// 关闭回收连接
+		jedis.close();
 	}
 
 }
