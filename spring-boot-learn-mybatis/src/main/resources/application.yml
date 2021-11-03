@@ -6,7 +6,8 @@ logging:  level:    root: info
     
 spring:  datasource:    username: root
     password: mysql
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    # allowMultiQueries 是否允许一条SQL语句包含多个执行SQL以分号;分隔
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     
     

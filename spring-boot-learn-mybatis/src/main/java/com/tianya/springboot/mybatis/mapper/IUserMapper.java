@@ -14,5 +14,7 @@ public interface IUserMapper {
 	public List<UserBean> getUserList() ;
 	
 	public List<Map<String, Object>> getUserTableColumns();
+	
+	public void batchInsert(List<UserBean> userList);
 
 }

@@ -14,6 +14,13 @@
         SELECT * FROM information_schema.COLUMNS t WHERE  t.TABLE_SCHEMA = 'test' AND t.TABLE_NAME = 'user'
     </select>
     
+    <!-- 批量插入用户 -->
+    <insert id="batchInsert">
+    	<foreach collection="list" item="item" index="index"  separator=";" >
+        	insert into user(username,password,isadmin) 
+        	values(#{item.userName}, #{item.password}, #{item.isAdmin})
+  		</foreach>
+    </insert>
     
     
 </mapper>
