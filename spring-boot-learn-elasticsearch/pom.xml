@@ -4,7 +4,7 @@
 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>spring-boot-learn-mybatis</artifactId>
+	<artifactId>spring-boot-learn-elasticsearch</artifactId>
 
 	<parent>
 		<groupId>com.tianya.springboot</groupId>
@@ -14,6 +14,7 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 
 	<dependencies>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -32,22 +33,10 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		</dependency>
-
-		<!-- Spring Boot 整合的 mybatis 的依赖jar包，其中包含mybatis相关的依赖 -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-
-		<!-- MySql驱动 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
+		
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -65,19 +54,10 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 		</dependency>
 		
 		
+		
 
 
 	</dependencies>
-
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 
 </project>
