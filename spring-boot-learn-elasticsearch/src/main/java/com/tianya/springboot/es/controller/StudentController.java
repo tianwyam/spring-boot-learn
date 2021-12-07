@@ -48,9 +48,15 @@ public class StudentController {
 	@GetMapping("/insert")
 	public String insertStudent() throws Exception {
 		
-		IndexRequest indexRequest = new IndexRequest(STUDENT_INDEX).id("100").type("long");
+		IndexRequest indexRequest = new IndexRequest(STUDENT_INDEX)
+				.id("100")
+				.type("student");
 		
-		Student student = Student.builder().id(100).age(24).name("To李小龙").addr("中国").build();
+		Student student = Student.builder()
+				.id(100L)
+				.age(24)
+				.name("To李小龙")
+				.addr("中国").build();
 		
 		indexRequest.source(JSON.toJSONString(student), XContentType.JSON);
 		
