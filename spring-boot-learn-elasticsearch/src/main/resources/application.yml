@@ -7,3 +7,5 @@ server:  port: 8080
 
 #使用模板方式
 spring:  elasticsearch:    rest:      uris:      - http://localhost:9200
+      
+logging:  level:    root: info

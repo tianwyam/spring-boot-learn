@@ -1773,3 +1773,720 @@ public class UserServiceTest {
 
 
 
+<hr/>
+
+
+
+## spring-boot-learn-elasticsearch
+
+
+
+对 elasticsearch操作
+
+
+
+### 一、使用spring-data方式进行操作elasticsearch
+
+
+
+
+
+1.添加依赖
+
+~~~xml
+<!-- 添加 elasticsearch 客户端 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+</dependency>
+
+~~~
+
+
+
+2.添加ES配置
+
+~~~yml
+
+#使用模板方式
+spring:
+  elasticsearch:
+    rest:
+      uris:
+      - http://localhost:9200
+    
+~~~
+
+
+
+3.添加实体类
+
+~~~java
+package com.tianya.springboot.es.entity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(indexName = "people_index", type = "people")
+public class PeopleBean {
+	
+	/**
+	 * 主键
+	 */
+	@Id
+	private Long uid ;
+	
+	/**
+	 * 姓名
+	 */
+	@Field
+	private String name ;
+	
+	/**
+	 * 年龄
+	 */
+	@Field
+	private int age ;
+	
+	/**
+	 * 地址
+	 */
+	@Field
+	private String addr ;
+	
+	/**
+	 * 生日
+	 */
+	@Field
+	private String birthDay ;
+	
+	/**
+	 * 职业
+	 */
+	@Field
+	private String professional ;
+	
+	/**
+	 * 兴趣
+	 */
+	@Field
+	private String interest ;
+	
+}
+~~~
+
+
+
+4.添加repository
+
+~~~java
+package com.tianya.springboot.es.dao;
+
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
+
+import com.tianya.springboot.es.entity.PeopleBean;
+
+@Repository
+public interface PeopleEsDao extends ElasticsearchRepository<PeopleBean, Long>{
+
+}
+~~~
+
+
+
+准备操作都做完了，开始进行对elasticsearch操作了
+
+
+
+#### 1.1 新增
+
+
+
+~~~java
+@SpringBootTest
+public class PeopleTest {
+	
+	@Autowired
+	private PeopleEsDao peopleEsDao ;
+	
+	@Test
+	public void insert() {
+		
+		List<PeopleBean> peopleBeanList = new ArrayList<>();
+		peopleBeanList.add(PeopleBean.builder().uid(1L).name("吴彦祖").age(45).birthDay("1977-01-01").addr("香港").professional("演员").interest("赛车").build());
+		peopleBeanList.add(PeopleBean.builder().uid(2L).name("吴奇隆").age(55).birthDay("1967-01-01").addr("大陆").professional("演员").interest("唱歌").build());
+		peopleBeanList.add(PeopleBean.builder().uid(3L).name("吴京").age(45).birthDay("1977-01-01").addr("大陆").professional("演员").interest("武术").build());
+		peopleBeanList.add(PeopleBean.builder().uid(4L).name("古天乐").age(55).birthDay("1967-01-01").addr("香港").professional("演员").interest("唱歌").build());
+		peopleBeanList.add(PeopleBean.builder().uid(5L).name("苏炳添").age(35).birthDay("1987-01-01").addr("大陆").professional("运动员").interest("跑步").build());
+		peopleBeanList.add(PeopleBean.builder().uid(6L).name("刘亦菲").age(30).birthDay("1992-01-01").addr("大陆").professional("歌手").interest("演戏").build());
+		peopleBeanList.add(PeopleBean.builder().uid(7L).name("张杰").age(30).birthDay("1992-01-01").addr("大陆").professional("歌手").interest("健身").build());
+		peopleBeanList.add(PeopleBean.builder().uid(8L).name("张家辉").age(45).birthDay("1977-01-01").addr("香港").professional("演员").interest("唱歌").build());
+		
+        // 新增
+		Iterable<PeopleBean> saveResult = peopleEsDao.saveAll(peopleBeanList);
+		System.out.println(JSON.toJSONString(saveResult, true));
+	}
+}
+~~~
+
+结果：
+
+~~~json
+[
+	{
+		"addr":"大陆",
+		"age":35,
+		"birthDay":"1987-01-01",
+		"interest":"跑步",
+		"name":"苏炳添",
+		"professional":"运动员",
+		"uid":5
+	},
+	{
+		"addr":"香港",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"唱歌",
+		"name":"张家辉",
+		"professional":"演员",
+		"uid":8
+	},
+	{
+		"addr":"大陆",
+		"age":55,
+		"birthDay":"1967-01-01",
+		"interest":"唱歌",
+		"name":"吴奇隆",
+		"professional":"演员",
+		"uid":2
+	},
+	{
+		"addr":"香港",
+		"age":55,
+		"birthDay":"1967-01-01",
+		"interest":"唱歌",
+		"name":"古天乐",
+		"professional":"演员",
+		"uid":4
+	},
+	{
+		"addr":"大陆",
+		"age":30,
+		"birthDay":"1992-01-01",
+		"interest":"演戏",
+		"name":"刘亦菲",
+		"professional":"歌手",
+		"uid":6
+	},
+	{
+		"addr":"香港",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"赛车",
+		"name":"吴彦祖",
+		"professional":"演员",
+		"uid":1
+	},
+	{
+		"addr":"大陆",
+		"age":30,
+		"birthDay":"1992-01-01",
+		"interest":"健身",
+		"name":"张杰",
+		"professional":"歌手",
+		"uid":7
+	},
+	{
+		"addr":"大陆",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"武术",
+		"name":"吴京",
+		"professional":"演员",
+		"uid":3
+	}
+]
+~~~
+
+
+
+#### 1.2 查询-所有
+
+
+
+~~~java
+@Test
+public void get() {
+    // 查询所有
+    Iterable<PeopleBean> peopleList = peopleEsDao.findAll();
+    System.out.println(JSON.toJSONString(peopleList, true));
+}
+
+~~~
+
+类似SQL:
+
+~~~sql
+SELECT * FROM people
+~~~
+
+
+
+#### 1.3 查询-排序
+
+~~~java
+@Test
+public void order4Get() {
+
+    // 按照uid进行排序
+    Sort orderSort = Sort.by(Order.asc("uid"));
+    Iterable<PeopleBean> sortPeopleList = peopleEsDao.findAll(orderSort);
+    System.out.println(JSON.toJSONString(sortPeopleList, true));
+}
+~~~
+
+可以按照多个字段进行排序
+
+public static Sort by(Order... orders) ;
+
+
+
+类似SQL:
+
+~~~sql
+SELECT * FROM people order by uid
+~~~
+
+
+
+#### 1.4 分页查询
+
+~~~java
+@Test
+public void page4Get() {
+
+    PageRequest page = PageRequest.of(0, 5, Sort.by(Order.asc("uid")));
+    // 分页查询
+    Page<PeopleBean> pagePeopleList = peopleEsDao.findAll(page);
+    System.out.println(JSON.toJSONString(pagePeopleList, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+SELECT * FROM people order by uid limit 0,5
+~~~
+
+结果：
+
+~~~json
+{
+	"content":[
+		{
+			"addr":"香港",
+			"age":45,
+			"birthDay":"1977-01-01",
+			"interest":"赛车",
+			"name":"吴彦祖",
+			"professional":"演员",
+			"uid":1
+		},
+		{
+			"addr":"大陆",
+			"age":55,
+			"birthDay":"1967-01-01",
+			"interest":"唱歌",
+			"name":"吴奇隆",
+			"professional":"演员",
+			"uid":2
+		},
+		{
+			"addr":"大陆",
+			"age":45,
+			"birthDay":"1977-01-01",
+			"interest":"武术",
+			"name":"吴京",
+			"professional":"演员",
+			"uid":3
+		},
+		{
+			"addr":"香港",
+			"age":55,
+			"birthDay":"1967-01-01",
+			"interest":"唱歌",
+			"name":"古天乐",
+			"professional":"演员",
+			"uid":4
+		},
+		{
+			"addr":"大陆",
+			"age":35,
+			"birthDay":"1987-01-01",
+			"interest":"跑步",
+			"name":"苏炳添",
+			"professional":"运动员",
+			"uid":5
+		}
+	],
+	"empty":false,
+	"facets":[],
+	"first":true,
+	"last":false,
+	"maxScore":null,
+	"number":0,
+	"numberOfElements":5,
+	"pageable":{
+		"offset":0,
+		"pageNumber":0,
+		"pageSize":5,
+		"paged":true,
+		"sort":{
+			"empty":false,
+			"sorted":true,
+			"unsorted":false
+		},
+		"unpaged":false
+	},
+	"size":5,
+	"sort":{"$ref":"$.pageable.sort"},
+	"totalElements":8,
+	"totalPages":2
+}
+~~~
+
+
+
+#### 1.5 搜索-等值查询-Term
+
+~~~java
+@Test
+public void search() {
+
+    TermQueryBuilder ageQuery = QueryBuilders.termQuery("age", 45);
+	// age = 45
+    Iterable<PeopleBean> search = peopleEsDao.search(ageQuery);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+SELECT * FROM people WHERE age = 45
+~~~
+
+结果：
+
+~~~json
+[
+	{
+		"addr":"香港",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"唱歌",
+		"name":"张家辉",
+		"professional":"演员",
+		"uid":8
+	},
+	{
+		"addr":"香港",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"赛车",
+		"name":"吴彦祖",
+		"professional":"演员",
+		"uid":1
+	},
+	{
+		"addr":"大陆",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"武术",
+		"name":"吴京",
+		"professional":"演员",
+		"uid":3
+	}
+]
+~~~
+
+
+
+若是查询中文，需要添加 keyword ，term 是指分词后的 = 查询
+
+~~~java
+@Test
+public void searchChinese() {
+
+    // 添加 keyword 的目的是 以后面查询的值整体查询，不要分词，不然查询不到
+    TermQueryBuilder termQuery = QueryBuilders.termQuery("addr.keyword", "大陆");
+
+    System.out.println("参数：");
+    System.out.println(termQuery.toString(true));
+
+    Iterable<PeopleBean> search = peopleEsDao.search(termQuery);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+}
+~~~
+
+
+
+#### 1.6 搜索-多条件
+
+~~~java
+@Test
+public void searchMore() {
+
+
+    BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+        .filter(QueryBuilders.termQuery("addr.keyword", "大陆"))
+        .filter(QueryBuilders.termQuery("age", 45));
+
+    System.out.println("参数：");
+    System.out.println(boolQuery.toString(true));
+
+    Iterable<PeopleBean> search = peopleEsDao.search(boolQuery);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+SELECT * FROM people WHERE addr = '大陆' AND age = 45
+~~~
+
+结果：
+
+~~~json
+{
+    "addr":"大陆",
+    "age":45,
+    "birthDay":"1977-01-01",
+    "interest":"武术",
+    "name":"吴京",
+    "professional":"演员",
+    "uid":3
+}
+~~~
+
+
+
+#### 1.7 搜索-范围查询
+
+
+
+~~~java
+@Test
+public void searchBetweenAnd() {
+
+    // >= 
+    // RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery("age").gte(55);
+    //  between and
+    RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery("age").from(55).to(66);
+
+    System.out.println("参数：");
+    System.out.println(rangeQuery.toString(true));
+
+    Iterable<PeopleBean> search = peopleEsDao.search(rangeQuery);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+
+}
+~~~
+
+类似SQL：
+
+~~~sql
+SELECT * FROM people WHERE age BETWEEN 55 AND 66
+~~~
+
+gte >=
+
+gt >
+
+lt < 
+
+lte <=
+
+from ... to ... 类似 between and
+
+
+
+
+
+#### 1.8 搜索-分页
+
+
+
+~~~java
+@Test
+public void searchSort() {
+
+    BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery()
+        .filter(QueryBuilders.termQuery("professional.keyword", "演员"))
+        .filter(QueryBuilders.termQuery("age", 55));
+    System.out.println("参数：");
+    System.out.println(queryBuilder.toString(true));
+    // 分页排序
+    PageRequest page = PageRequest.of(0, 5, Sort.by(Order.desc("age"), Order.asc("uid")));
+    // 搜索分页查询
+    Iterable<PeopleBean> search = peopleEsDao.search(queryBuilder, page);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+SELECT 
+* 
+FROM people 
+WHERE professional = '演员'
+AND age = 55
+ORDER BY age desc, uid asc
+limit 0,5
+~~~
+
+
+
+结果：
+
+~~~json
+[
+	{
+		"addr":"大陆",
+		"age":55,
+		"birthDay":"1967-01-01",
+		"interest":"唱歌",
+		"name":"吴奇隆",
+		"professional":"演员",
+		"uid":2
+	},
+	{
+		"addr":"香港",
+		"age":55,
+		"birthDay":"1967-01-01",
+		"interest":"唱歌",
+		"name":"古天乐",
+		"professional":"演员",
+		"uid":4
+	}
+]
+~~~
+
+
+
+
+
+#### 1.9 搜索-组合查询-特定输出字段
+
+
+
+~~~java
+@Test
+public void searchQuery() {
+
+    NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder()
+        .withFields("uid","name","age","professional")
+        .withFilter(QueryBuilders.termQuery("professional.keyword", "演员"))
+        .withQuery(QueryBuilders.rangeQuery("age").gte(45))
+        .withSort(SortBuilders.fieldSort("uid"))
+        .withPageable(PageRequest.of(0, 3));
+
+    Iterable<PeopleBean> search = peopleEsDao.search(queryBuilder.build());
+
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(search, true));
+
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select 
+	uid,name,age,professional
+from people
+where professional = '演员'
+and age >= 45
+order by uid
+limit 0,3
+~~~
+
+结果：
+
+~~~json
+[
+	{
+		"age":45,
+		"name":"吴彦祖",
+		"professional":"演员",
+		"uid":1
+	},
+	{
+		"age":55,
+		"name":"吴奇隆",
+		"professional":"演员",
+		"uid":2
+	},
+	{
+		"age":45,
+		"name":"吴京",
+		"professional":"演员",
+		"uid":3
+	}
+]
+~~~
+
+
+
+#### 1.10 搜索-分组
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
