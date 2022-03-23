@@ -58,9 +58,4 @@ public class PeopleBean {
 	@Field
 	private String interest ;
 	
-	
-	private int ageCount ;
-	
-	private int professionalCount ;
-	
 }
