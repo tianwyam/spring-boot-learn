@@ -1924,14 +1924,17 @@ public class PeopleTest {
 	public void insert() {
 		
 		List<PeopleBean> peopleBeanList = new ArrayList<>();
+		
 		peopleBeanList.add(PeopleBean.builder().uid(1L).name("吴彦祖").age(45).birthDay("1977-01-01").addr("香港").professional("演员").interest("赛车").build());
-		peopleBeanList.add(PeopleBean.builder().uid(2L).name("吴奇隆").age(55).birthDay("1967-01-01").addr("大陆").professional("演员").interest("唱歌").build());
-		peopleBeanList.add(PeopleBean.builder().uid(3L).name("吴京").age(45).birthDay("1977-01-01").addr("大陆").professional("演员").interest("武术").build());
+		peopleBeanList.add(PeopleBean.builder().uid(2L).name("吴奇隆").age(55).birthDay("1967-01-01").addr("大陆").professional("歌手").interest("演戏").build());
+		peopleBeanList.add(PeopleBean.builder().uid(3L).name("吴京").age(45).birthDay("1977-01-01").addr("大陆").professional("武打演员").interest("武术").build());
 		peopleBeanList.add(PeopleBean.builder().uid(4L).name("古天乐").age(55).birthDay("1967-01-01").addr("香港").professional("演员").interest("唱歌").build());
 		peopleBeanList.add(PeopleBean.builder().uid(5L).name("苏炳添").age(35).birthDay("1987-01-01").addr("大陆").professional("运动员").interest("跑步").build());
 		peopleBeanList.add(PeopleBean.builder().uid(6L).name("刘亦菲").age(30).birthDay("1992-01-01").addr("大陆").professional("歌手").interest("演戏").build());
-		peopleBeanList.add(PeopleBean.builder().uid(7L).name("张杰").age(30).birthDay("1992-01-01").addr("大陆").professional("歌手").interest("健身").build());
+		peopleBeanList.add(PeopleBean.builder().uid(7L).name("刘翔").age(30).birthDay("1992-01-01").addr("大陆").professional("运动员").interest("健身").build());
 		peopleBeanList.add(PeopleBean.builder().uid(8L).name("张家辉").age(45).birthDay("1977-01-01").addr("香港").professional("演员").interest("唱歌").build());
+		peopleBeanList.add(PeopleBean.builder().uid(9L).name("毛不易").age(45).birthDay("1977-01-01").addr("大陆").professional("歌手").interest("唱歌").build());
+		
 		
         // 新增
 		Iterable<PeopleBean> saveResult = peopleEsDao.saveAll(peopleBeanList);
@@ -1945,31 +1948,31 @@ public class PeopleTest {
 ~~~json
 [
 	{
-		"addr":"大陆",
-		"age":35,
-		"birthDay":"1987-01-01",
-		"interest":"跑步",
-		"name":"苏炳添",
-		"professional":"运动员",
-		"uid":5
-	},
-	{
 		"addr":"香港",
 		"age":45,
 		"birthDay":"1977-01-01",
-		"interest":"唱歌",
-		"name":"张家辉",
+		"interest":"赛车",
+		"name":"吴彦祖",
 		"professional":"演员",
-		"uid":8
+		"uid":1
 	},
 	{
 		"addr":"大陆",
 		"age":55,
 		"birthDay":"1967-01-01",
-		"interest":"唱歌",
+		"interest":"演戏",
 		"name":"吴奇隆",
-		"professional":"演员",
+		"professional":"歌手",
 		"uid":2
+	},
+	{
+		"addr":"大陆",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"武术",
+		"name":"吴京",
+		"professional":"武打演员",
+		"uid":3
 	},
 	{
 		"addr":"香港",
@@ -1982,6 +1985,15 @@ public class PeopleTest {
 	},
 	{
 		"addr":"大陆",
+		"age":35,
+		"birthDay":"1987-01-01",
+		"interest":"跑步",
+		"name":"苏炳添",
+		"professional":"运动员",
+		"uid":5
+	},
+	{
+		"addr":"大陆",
 		"age":30,
 		"birthDay":"1992-01-01",
 		"interest":"演戏",
@@ -1990,31 +2002,31 @@ public class PeopleTest {
 		"uid":6
 	},
 	{
-		"addr":"香港",
-		"age":45,
-		"birthDay":"1977-01-01",
-		"interest":"赛车",
-		"name":"吴彦祖",
-		"professional":"演员",
-		"uid":1
-	},
-	{
 		"addr":"大陆",
 		"age":30,
 		"birthDay":"1992-01-01",
 		"interest":"健身",
-		"name":"张杰",
-		"professional":"歌手",
+		"name":"刘翔",
+		"professional":"运动员",
 		"uid":7
+	},
+	{
+		"addr":"香港",
+		"age":45,
+		"birthDay":"1977-01-01",
+		"interest":"唱歌",
+		"name":"张家辉",
+		"professional":"演员",
+		"uid":8
 	},
 	{
 		"addr":"大陆",
 		"age":45,
 		"birthDay":"1977-01-01",
-		"interest":"武术",
-		"name":"吴京",
-		"professional":"演员",
-		"uid":3
+		"interest":"唱歌",
+		"name":"毛不易",
+		"professional":"歌手",
+		"uid":9
 	}
 ]
 ~~~
@@ -2468,6 +2480,622 @@ limit 0,3
 
 
 
+~~~java
+
+@Test
+public void searchAggr() {
+
+    NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder()
+        .addAggregation(AggregationBuilders.terms("ageCount")
+                        .field("age")
+                        .size(100)
+                        .subAggregation(AggregationBuilders.terms("professionalCount").field("professional.keyword")
+                                        .subAggregation(AggregationBuilders.topHits("fieldNms")
+                                                        .fetchSource(new String[] {"uid","age","professional","name"}, null))));
+
+    // 分组聚合分页结果
+    AggregatedPage<PeopleBean> peopleAggrPage = (AggregatedPage<PeopleBean>)peopleEsDao.search(queryBuilder.build());
+
+    System.out.println("结果：");
+    ParsedLongTerms ageAggr = (ParsedLongTerms)peopleAggrPage.getAggregation("ageCount");
+    List<? extends Bucket> buckets = ageAggr.getBuckets();
+    for (Bucket bucket : buckets) {
+
+        Number age = bucket.getKeyAsNumber();
+        long docCount = bucket.getDocCount();
+
+        System.out.println("年龄："+age + " 总数：" + docCount);
+
+        Aggregations aggregations = bucket.getAggregations();
+        for (Aggregation aggregation : aggregations) {
+
+            ParsedStringTerms profAggr = (ParsedStringTerms) aggregation;
+            List<? extends Bucket> profBuckets = profAggr.getBuckets();
+            for (Bucket bucket2 : profBuckets) {
+                long profCount = bucket2.getDocCount();
+                String prof = bucket2.getKeyAsString();
+                System.out.println("\t职业："+prof+" 总数："+profCount);
+
+                Aggregations filedNmAggrs = bucket2.getAggregations();
+                for (Aggregation filedNmAggr : filedNmAggrs) {
+
+                    ParsedTopHits topHits = (ParsedTopHits) filedNmAggr ;
+                    SearchHits hits = topHits.getHits();
+                    for (SearchHit hit : hits) {
+                        String source = hit.getSourceAsString();
+                        System.out.println("\t\t" + JSON.parseObject(source, PeopleBean.class));
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+
+}
+
+~~~
+
+
+
+类似SQL：
+
+~~~sql
+select * from people
+group by age, professional
+~~~
+
+
+
+
+
+### 二、使用client方式操作ES
+
+
+
+依赖还是跟上面一样，配置也是
+
+查询所有：
+
+~~~java
+
+/**
+ * @Description: 
+ * 使用 client方式
+ * @author: TianwYam
+ * @date 2022年3月23日 下午9:47:23
+ */
+@SpringBootTest
+public class PeopleTestUseClient {
+	
+	
+	@Autowired
+	private RestHighLevelClient esClient ;
+	
+	@Test
+	public void getAll() throws Exception {
+		
+		SearchRequest searchRequest = new SearchRequest("people_index");
+		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+		
+		System.out.println("参数：");
+		System.out.println(sourceBuilder);
+		
+		searchRequest.source(sourceBuilder);
+		SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+		System.out.println("结果：");
+		System.out.println(JSON.toJSONString(response, true));
+	}
+	
+}
+~~~
+
+
+
+
+
+#### 2.1 等值查询 =
+
+
+
+~~~java
+
+@Test
+public void where() throws Exception {
+
+    // 类似：select * from people where age = 45
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.query(QueryBuilders.termQuery("age", 45));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+
+
+类似SQL：
+
+~~~sql
+select * from people where age = 45
+~~~
+
+
+
+URL查询：
+
+~~~json
+{
+	"query":{
+		"term":{
+			"age":{
+				"boost":1.0,
+				"value":45
+			}
+		}
+	}
+}
+~~~
+
+
+
+
+
+#### 2.2 多值查询 in
+
+
+
+~~~java
+
+@Test
+public void in() throws Exception {
+
+    // 类似：select * from people where professional in ('演员', '歌手')
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.query(QueryBuilders.termsQuery("professional.keyword", Arrays.asList("演员","歌手")));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select * from people where professional in ('演员', '歌手')
+~~~
+
+
+
+SDL：
+
+~~~json
+{
+	"query":{
+		"terms":{
+			"professional.keyword":[
+				"演员",
+				"歌手"
+			],
+			"boost":1.0
+		}
+	}
+}
+~~~
+
+
+
+#### 2.3 范围查询
+
+
+
+~~~java
+
+@Test
+public void betweenAnd() throws Exception {
+
+    // 类似：select * from people where age between 50 and 55
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    //		sourceBuilder.query(QueryBuilders.rangeQuery("age").from(50).to(55));
+
+    //  50 < age <= 55
+    sourceBuilder.query(QueryBuilders.rangeQuery("age").gt(50).lte(55));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select * from people where age between 50 and 55
+~~~
+
+
+
+SDL：
+
+~~~json
+{
+	"query":{
+		"range":{
+			"age":{
+				"include_lower":false,
+				"include_upper":true,
+				"from":50,
+				"boost":1.0,
+				"to":55
+			}
+		}
+	}
+}
+~~~
+
+
+
+#### 2.4 模糊查询
+
+
+
+~~~java
+
+@Test
+public void likeLeft() throws Exception {
+
+    // 类似：select * from people where professional like '武打%'
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.query(QueryBuilders.prefixQuery("professional.keyword", "武打"));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select * from people where professional like '武打%'
+~~~
+
+SDL:
+
+~~~json
+{
+	"query":{
+		"prefix":{
+			"professional.keyword":{
+				"boost":1.0,
+				"value":"武打"
+			}
+		}
+	}
+}
+~~~
+
+
+
+#### 2.5 通配符模糊查询
+
+
+
+~~~java
+
+@Test
+public void likeAny() throws Exception {
+
+    // 类似：select * from people where professional like '%打%员'
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    // 通配符模糊查询
+    sourceBuilder.query(QueryBuilders.wildcardQuery("professional.keyword", "*打*员"));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select * from people where professional like '%打%员'
+~~~
+
+SDL：
+
+~~~json
+{
+	"query":{
+		"wildcard":{
+			"professional.keyword":{
+				"boost":1.0,
+				"wildcard":"*打*员"
+			}
+		}
+	}
+}
+~~~
+
+
+
+#### 2.6 统计查询（最大、最小、平均、求和）
+
+
+
+~~~java
+
+@Test
+public void max() throws Exception {
+
+    // 类似：select max(age) as ageMax from people 
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.size(0);
+    sourceBuilder.aggregation(AggregationBuilders.max("ageMax").field("age"));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select max(age) as ageMax from people
+~~~
+
+SDL:
+
+~~~json
+{
+	"size":0,
+	"aggregations":{
+		"ageMax":{
+			"max":{
+				"field":"age"
+			}
+		}
+	}
+}
+~~~
+
+
+
+#### 2.7 去重
+
+
+
+~~~java
+
+@Test
+public void distinct() throws Exception {
+
+    // 类似：select count(distinct uid) as uidCount from people 
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.size(0);
+    sourceBuilder.aggregation(AggregationBuilders.cardinality("uidCount").field("uid"));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL:
+
+~~~sql
+select count(distinct uid) as uidCount from people 
+~~~
+
+SDL：
+
+~~~json
+{
+	"size":0,
+	"aggregations":{
+		"uidCount":{
+			"cardinality":{
+				"field":"uid"
+			}
+		}
+	}
+}
+~~~
+
+
+
+
+
+#### 2.8 分组聚合
+
+
+
+~~~java
+
+@Test
+public void groupBy() throws Exception {
+
+    // 类似：select age, count(*) from people group by age
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.size(0);
+    sourceBuilder.aggregation(AggregationBuilders.terms("ageGroup").field("age"));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+l类似SQL：
+
+~~~sql
+select age, count(*) from people group by age
+~~~
+
+SDL:
+
+~~~json
+{
+	"size":0,
+	"aggregations":{
+		"ageGroup":{
+			"terms":{
+				"shard_min_doc_count":0,
+				"field":"age",
+				"size":10,
+				"show_term_doc_count_error":false,
+				"min_doc_count":1,
+				"order":[
+					{
+						"_count":"desc"
+					},
+					{
+						"_key":"asc"
+					}
+				]
+			}
+		}
+	}
+}
+~~~
+
+
+
+#### 2.9 分组排序
+
+
+
+~~~java
+
+@Test
+public void groupByOrder() throws Exception {
+
+    // 类似：select age as key , count(*) as count from people group by age order by count asc, key desc
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.size(0);
+    sourceBuilder.aggregation(AggregationBuilders.terms("ageGroup")
+                              .field("age")
+                              .order(BucketOrder.compound(BucketOrder.count(true), BucketOrder.key(false))));
+    //		sourceBuilder.aggregation(AggregationBuilders.terms("ageGroup").field("age").order(BucketOrder.key(false)));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
+
+类似SQL：
+
+~~~sql
+select age as key , count(*) as count 
+from people group by age 
+order by count asc, key desc
+~~~
+
+SDL:
+
+~~~json
+{
+	"size":0,
+	"aggregations":{
+		"ageGroup":{
+			"terms":{
+				"shard_min_doc_count":0,
+				"field":"age",
+				"size":10,
+				"show_term_doc_count_error":false,
+				"min_doc_count":1,
+				"order":[
+					{
+						"_count":"asc"
+					},
+					{
+						"_key":"desc"
+					}
+				]
+			}
+		}
+	}
+}
+~~~
 
 
 
@@ -2475,18 +3103,92 @@ limit 0,3
 
 
 
+#### 2.10 多值聚合
 
 
 
+~~~java
+
+@Test
+public void groupByMore() throws Exception {
+
+    // 类似：select age , professional, count(*) as count from people group by age, professional
+
+    SearchRequest searchRequest = new SearchRequest("people_index");
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+    sourceBuilder.size(0);
+    sourceBuilder.aggregation(AggregationBuilders.terms("ageGroup")
+                              .field("age")
+                              .subAggregation(AggregationBuilders.terms("profGroup")
+                                              .field("professional.keyword")));
+    //		sourceBuilder.aggregation(AggregationBuilders.terms("ageGroup").field("age").order(BucketOrder.key(false)));
+
+    System.out.println("参数：");
+    System.out.println(JSON.toJSONString(JSON.parse(sourceBuilder.toString()), true));
+
+    searchRequest.source(sourceBuilder);
+    SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+    System.out.println("结果：");
+    System.out.println(response);
+    //		System.out.println(JSON.toJSONString(response, true));
+}
+
+~~~
 
 
 
+l类似SQL：
 
+~~~sql
+select age , professional, count(*) as count 
+from people 
+group by age, professional
+~~~
 
+SDL:
 
-
-
-
-
-
+~~~json
+{
+	"size":0,
+	"aggregations":{
+		"ageGroup":{
+			"terms":{
+				"shard_min_doc_count":0,
+				"field":"age",
+				"size":10,
+				"show_term_doc_count_error":false,
+				"min_doc_count":1,
+				"order":[
+					{
+						"_count":"desc"
+					},
+					{
+						"_key":"asc"
+					}
+				]
+			},
+			"aggregations":{
+				"profGroup":{
+					"terms":{
+						"shard_min_doc_count":0,
+						"field":"professional.keyword",
+						"size":10,
+						"show_term_doc_count_error":false,
+						"min_doc_count":1,
+						"order":[
+							{
+								"_count":"desc"
+							},
+							{
+								"_key":"asc"
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}
+~~~
 
